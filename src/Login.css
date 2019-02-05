@@ -1,0 +1,20 @@
+.LoginContainer {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  max-width: 90%;
+  align-self: center;
+}
+.LoginPasswordContainer {
+  margin-top: 16px;
+}
+.LoginButtonAndErrorMessageContainer {
+  position: relative;
+  margin-top: 16px;
+}
+.LoginErrorMessage {
+  position: absolute;
+  left: 0;
+  top: 72px;
+  color: var(--red-70);
+}

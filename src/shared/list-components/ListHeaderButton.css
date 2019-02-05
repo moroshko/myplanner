@@ -1,0 +1,11 @@
+.ListHeaderButton {
+  font-size: var(--font-size-2);
+  font-family: var(--font-body-bold);
+  text-transform: uppercase;
+  color: var(--grey-80);
+  letter-spacing: 0.05em;
+  margin-left: auto;
+}
+.ListHeaderButton:hover {
+  color: var(--grey-100);
+}

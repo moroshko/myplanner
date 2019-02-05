@@ -1,0 +1,62 @@
+.TextInputContainer {
+  position: relative;
+  display: flex;
+}
+.TextInputIcon {
+  display: flex;
+  position: absolute;
+  left: 16px;
+  top: 17px;
+}
+.TextInputHelperText {
+  position: absolute;
+  right: 14px;
+  top: 22px;
+  font-size: var(--font-size-1);
+  color: var(--grey-50);
+  width: 105px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: right;
+}
+.TextInput {
+  width: calc(100% - 30px); /* padding + border: 1 + 14 + 14 + 1 = 30 */
+  height: 19px;
+  padding: 18.5px 14px;
+  border: 1px solid var(--grey-30);
+  border-radius: 4px;
+}
+.TextInput:hover {
+  border-color: var(--grey-50);
+}
+.TextInput:focus {
+  /* width is still the same here: 2 + 13 + 13 + 2 = 30 */
+  padding: 17.5px 13px;
+  border: 2px solid var(--primary-70);
+  outline: 0;
+}
+.TextInputWithIcon {
+  width: calc(100% - 71px); /* padding + border: 1 + 55 + 14 + 1 = 71 */
+  padding: 18.5px 14px 18.5px 55px;
+}
+.TextInputWithIcon:focus {
+  /* width is still the same here: 2 + 54 + 13 + 2 = 71 */
+  padding: 17.5px 13px 17.5px 54px;
+}
+.TextInputWithHelperText {
+  width: calc(100% - 143px); /* padding + border: 1 + 14 + 127 + 1 = 143 */
+  padding: 18.5px 127px 18.5px 14px;
+}
+.TextInputWithHelperText:focus {
+  /* width is still the same here: 2 + 13 + 126 + 2 = 143 */
+  padding: 17.5px 126px 17.5px 13px;
+}
+.TextInputWithIcon.TextInputWithHelperText {
+  width: calc(100% - 184px); /* padding + border: 1 + 55 + 127 + 1 = 184 */
+  padding: 18.5px 127px 18.5px 55px; /* 14 + 105 + 8 = 127 */
+}
+.TextInputWithIcon.TextInputWithHelperText:focus {
+  /* width is still the same here: 2 + 54 + 126 + 2 = 184 */
+  padding: 17.5px 126px 17.5px 54px;
+}

@@ -1,0 +1,18 @@
+.ListHeader {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  min-height: 32px;
+  font-size: var(--font-size-4);
+  font-family: var(--font-header);
+  color: var(--grey-100);
+  background-color: var(--grey-30);
+  transition: color 0.25s ease, background-color 0.25s ease;
+}
+.ListHeaderHighlighted {
+  color: var(--primary-100);
+  background-color: var(--primary-30);
+}
+.ListHeaderAddButton {
+  margin-left: auto;
+}

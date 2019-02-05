@@ -1,0 +1,15 @@
+{
+  "name": "My Planner",
+  "short_name": "My Planner",
+  "display": "standalone",
+  "start_url": "./index.html",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "android-chrome-512x512.png",
+      "sizes": "144x144 64x64 32x32 24x24 16x16",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+.DebugInfo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  background-color: var(--grey-100);
+  color: var(--grey-10);
+  padding: 16px;
+}
+.DebugInfoBadge:not(:first-child) {
+  margin-left: 16px;
+}

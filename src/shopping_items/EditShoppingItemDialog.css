@@ -1,0 +1,12 @@
+.EditShoppingItemDialogCategoryContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+}
+.EditShoppingItemDialogCategoryLabelContainer {
+  margin-right: 16px;
+}
+.EditShoppingItemDialogCategorySelectContainer {
+  width: 200px;
+  margin-left: auto;
+}

@@ -1,0 +1,8 @@
+.ListItemDragHandle {
+  display: flex;
+  margin-right: 16px;
+  margin-left: auto;
+}
+.ListItemDragHandleHidden {
+  visibility: hidden;
+}

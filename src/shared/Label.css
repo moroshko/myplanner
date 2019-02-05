@@ -1,0 +1,7 @@
+.Label {
+  color: var(--grey-50);
+  font-size: var(--font-size-2);
+  font-family: var(--font-body-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}

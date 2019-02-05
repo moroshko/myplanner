@@ -1,0 +1,24 @@
+.Footer {
+  display: flex;
+  flex-shrink: 0;
+  width: 100%;
+  margin-top: auto;
+  border-top: 1px solid var(--grey-30);
+  background-color: var(--grey-10);
+}
+.FooterButton {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-2);
+  color: var(--grey-90);
+}
+.FooterButton:focus {
+  outline: 0;
+}
+.FooterButtonActive {
+  font-family: var(--font-body-bold);
+  color: var(--primary-60);
+}

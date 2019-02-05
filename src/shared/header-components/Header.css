@@ -1,0 +1,29 @@
+.Header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  width: calc(100% - 32px);
+  padding: 16px;
+  color: var(--grey-10);
+  background-color: var(--grey-90);
+  transition: color 0.25s ease, background-color 0.25s ease;
+}
+.HeaderHighlighted {
+  color: var(--primary-10);
+  background-color: var(--primary-100);
+}
+.HeaderBackButton {
+  margin-right: 24px;
+}
+.HeaderTitle {
+  font-size: var(--font-size-5);
+  font-family: var(--font-header-bold);
+}
+.HeaderButtonsContainer {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+.HeaderButtonsContainer > button:not(:last-child) {
+  margin-right: 24px;
+}

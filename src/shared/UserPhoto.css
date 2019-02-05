@@ -1,0 +1,31 @@
+.UserPhoto {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.1);
+}
+.UserPhotoButton {
+  width: 48px;
+  height: 48px;
+  margin-left: 8px;
+  border: 4px solid transparent;
+  transition: border 0.1s ease, transform 0.1s ease;
+}
+.UserPhotoActive {
+  border: 4px solid var(--primary-50);
+  box-shadow: none;
+}
+.UserPhotoNoOne {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: var(--font-size-1);
+}
+.UserPhotoImage {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}

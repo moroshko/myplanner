@@ -1,0 +1,8 @@
+.DialogTextInputHelperText {
+  font-size: var(--font-size-1);
+  padding: 8px 15px 0;
+  color: var(--grey-50);
+}
+.DialogTextInputHelperTextError {
+  color: var(--red-60);
+}

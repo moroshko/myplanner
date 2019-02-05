@@ -1,0 +1,37 @@
+.ListItemButton {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  align-self: stretch;
+  padding: 0 16px;
+  color: inherit;
+  text-align: left;
+  word-break: break-word; /* Useful when there is a very long word without spaces. */
+}
+.ListItemButtonWithPhoto {
+  padding: 8px 16px;
+}
+.ListItemButtonWithSecondaryText {
+  min-height: 64px;
+}
+.ListItemButtonDisabled {
+  cursor: default;
+}
+.ListItemButtonContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.ListItemButtonContentWithPhoto {
+  margin-left: 16px;
+}
+.ListItemButtonChildren {
+  display: flex;
+}
+.ListItemButtonSecondaryText {
+  font-size: var(--font-size-1);
+  color: var(--grey-50);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

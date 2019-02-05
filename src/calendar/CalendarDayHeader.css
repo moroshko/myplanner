@@ -1,0 +1,13 @@
+.CalendarDayHeaderDateContainer {
+  width: 90px;
+}
+.CalendarDayHeaderDate {
+  font-family: var(--font-header-extra-bold);
+}
+.CalendarDayHeaderDay {
+  margin-left: 4px;
+  color: var(--grey-90);
+}
+.CalendarDayHeaderDayWeekend {
+  color: var(--primary-100);
+}

@@ -1,0 +1,75 @@
+:root {
+  --primary-100: hsl(204, 96%, 27%);
+  --primary-90: hsl(203, 87%, 34%);
+  --primary-80: hsl(202, 83%, 41%);
+  --primary-70: hsl(201, 79%, 46%);
+  --primary-60: hsl(199, 84%, 55%);
+  --primary-50: hsl(197, 92%, 61%);
+  --primary-40: hsl(196, 94%, 67%);
+  --primary-30: hsl(195, 97%, 75%);
+  --primary-20: hsl(195, 100%, 85%);
+  --primary-10: hsl(195, 100%, 95%);
+
+  --grey-100: hsl(210, 24%, 16%);
+  --grey-90: hsl(209, 20%, 25%);
+  --grey-80: hsl(209, 18%, 30%);
+  --grey-70: hsl(209, 14%, 37%);
+  --grey-60: hsl(211, 12%, 43%);
+  --grey-50: hsl(211, 10%, 53%);
+  --grey-40: hsl(211, 13%, 65%);
+  --grey-30: hsl(210, 16%, 82%);
+  --grey-20: hsl(214, 15%, 91%);
+  --grey-10: hsl(216, 33%, 97%);
+
+  --green-100: hsl(170, 97%, 15%);
+  --green-90: hsl(168, 80%, 23%);
+  --green-80: hsl(166, 72%, 28%);
+  --green-70: hsl(164, 71%, 34%);
+  --green-60: hsl(162, 63%, 41%);
+  --green-50: hsl(160, 51%, 49%);
+  --green-40: hsl(158, 58%, 62%);
+  --green-30: hsl(156, 73%, 74%);
+  --green-20: hsl(154, 75%, 87%);
+  --green-10: hsl(152, 68%, 96%);
+
+  --red-100: hsl(348, 94%, 20%);
+  --red-90: hsl(350, 94%, 28%);
+  --red-80: hsl(352, 90%, 35%);
+  --red-70: hsl(354, 85%, 44%);
+  --red-60: hsl(356, 75%, 53%);
+  --red-50: hsl(360, 83%, 62%);
+  --red-40: hsl(360, 91%, 69%);
+  --red-30: hsl(360, 100%, 80%);
+  --red-20: hsl(360, 100%, 87%);
+  --red-10: hsl(360, 100%, 95%);
+
+  --font-size-1: 12px;
+  --font-size-2: 14px;
+  --font-size-3: 16px;
+  --font-size-4: 18px;
+  --font-size-5: 20px;
+  --font-size-6: 24px;
+  --font-size-7: 30px;
+  --font-size-8: 36px;
+  --font-size-9: 48px;
+  --font-size-10: 60px;
+
+  --font-header: 'RobotoRegular';
+  --font-header-bold: 'RobotoBold';
+  --font-header-extra-bold: 'RobotoBlack';
+
+  --font-body: 'OpenSansRegular';
+  --font-body-bold: 'OpenSansBold';
+
+  --box-shadow-1: 0 1px 3px hsla(0, 0%, 0%, 0.12),
+    0 1px 2px hsla(0, 0%, 0%, 0.24);
+  --box-shadow-1-up: 0 -1px 3px hsla(0, 0%, 0%, 0.12),
+    0 -1px 2px hsla(0, 0%, 0%, 0.24);
+  --box-shadow-2: 0 3px 6px hsla(0, 0%, 0%, 0.15),
+    0 2px 4px hsla(0, 0%, 0%, 0.12);
+  --box-shadow-3: 0 10px 20px hsla(0, 0%, 0%, 0.15),
+    0 3px 6px hsla(0, 0%, 0%, 0.1);
+  --box-shadow-4: 0 15px 25px hsla(0, 0%, 0%, 0.15),
+    0 5px 10px hsla(0, 0%, 0%, 0.5);
+  --box-shadow-5: 0 20px 40px hsla(0, 0%, 0%, 0.2);
+}

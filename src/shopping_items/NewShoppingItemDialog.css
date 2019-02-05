@@ -1,0 +1,12 @@
+.NewShoppingItemDialogCategoryContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+}
+.NewShoppingItemDialogCategoryLabelContainer {
+  margin-right: 16px;
+}
+.NewShoppingItemDialogCategorySelectContainer {
+  width: 200px;
+  margin-left: auto;
+}

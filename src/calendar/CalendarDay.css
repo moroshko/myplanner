@@ -1,0 +1,16 @@
+.CalendarDayTodoTime {
+  flex-shrink: 0;
+  width: 67px;
+  margin-right: 24px;
+  text-align: right;
+  font-family: var(--font-body-bold);
+  color: var(--grey-70);
+}
+.CalendarDayTodoDescription {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.CalendarDayLoading {
+  padding: 12px 16px;
+}

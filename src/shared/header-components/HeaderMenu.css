@@ -1,0 +1,33 @@
+.HeaderMenu {
+  position: relative;
+}
+.HeaderMenuDotsButton {
+  display: flex;
+}
+.HeaderMenuDotsButton:focus {
+  outline: 0;
+}
+.HeaderMenuList {
+  position: absolute;
+  right: 0;
+  top: 46px;
+  z-index: 1;
+  background-color: #fff;
+  color: var(--grey-100);
+  border-radius: 4px;
+  box-shadow: var(--box-shadow-3);
+}
+.HeaderMenuListItemsContainer {
+  padding: 8px 0;
+}
+.HeaderMenuListItem {
+  padding: 11px 16px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.HeaderMenuListItem:hover {
+  background-color: var(--grey-20);
+}
+.HeaderMenuListItemsSeparator {
+  background-color: var(--grey-30);
+}

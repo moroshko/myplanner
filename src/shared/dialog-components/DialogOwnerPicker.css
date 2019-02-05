@@ -1,0 +1,8 @@
+.DialogOwnerPicker {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+}
+.DialogOwnerPickerOwnersContainer {
+  margin-left: auto;
+}

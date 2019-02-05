@@ -1,0 +1,30 @@
+.IconPrimaryColor {
+  fill: var(--grey-50);
+}
+.IconSecondaryColor {
+  fill: var(--grey-90);
+}
+.IconHighlighted .IconPrimaryColor {
+  fill: var(--primary-50);
+}
+.IconHighlighted .IconSecondaryColor {
+  fill: var(--primary-100);
+}
+.IconOnLightBackground .IconPrimaryColor {
+  fill: var(--grey-50);
+}
+.IconOnLightBackground .IconSecondaryColor {
+  fill: var(--grey-10);
+}
+.IconOnDarkBackground .IconPrimaryColor {
+  fill: var(--grey-20);
+}
+.IconOnDarkBackground .IconSecondaryColor {
+  fill: var(--grey-90);
+}
+.IconOnBlueBackground .IconPrimaryColor {
+  fill: var(--primary-70);
+}
+.IconOnBlueBackground .IconSecondaryColor {
+  fill: var(--primary-10);
+}

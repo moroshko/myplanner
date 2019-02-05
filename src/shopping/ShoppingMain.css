@@ -1,0 +1,16 @@
+.ShoppingMain {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.ShoppingMainAutoSuggestContainer {
+  padding: 16px;
+  background-color: var(--grey-10);
+}
+.ShoppingMainSuggestionIcon {
+  display: flex;
+  margin-right: 16px;
+}
+.ShoppingMainSuggestionInShoppingList {
+  color: var(--grey-40);
+}
