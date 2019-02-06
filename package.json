@@ -34,7 +34,9 @@
     "react-window": "^1.5.1",
     "react-window-infinite-loader": "^1.0.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint-plugin-react-hooks": "0.0.0"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -48,7 +50,13 @@
     ]
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "plugins": [
+      "react-hooks"
+    ],
+    "rules": {
+      "react-hooks/rules-of-hooks": "error"
+    }
   },
   "browserslist": [
     ">0.2%",
