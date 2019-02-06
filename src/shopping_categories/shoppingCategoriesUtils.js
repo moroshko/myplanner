@@ -1,3 +1,4 @@
+import sortBy from 'lodash.sortby';
 import { getShoppingCategories } from './shoppingCategoriesAPI';
 import { uppercaseFirstLetterOfEveryWord } from '../shared/sharedUtils';
 
@@ -11,10 +12,13 @@ function cleanShoppingCategoryName(name) {
 
 function getCategorySelectOptionsPromise() {
   return getShoppingCategories().then(shoppingCategories => {
-    return shoppingCategories.map(({ id, name }) => ({
-      value: id,
-      label: name,
-    }));
+    return sortBy(
+      shoppingCategories.map(({ id, name }) => ({
+        value: id,
+        label: name,
+      })),
+      ['label']
+    );
   });
 }
 
