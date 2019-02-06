@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useContext } from 'react';
+import Logo from './Logo';
 import TextInput from './shared/TextInput';
 import Button from './shared/Button';
 import { signIn } from './authAPI';
@@ -41,25 +42,31 @@ function Login() {
   );
 
   return (
-    <form className="LoginContainer" onSubmit={onSubmit}>
-      <TextInput icon="envelope" placeholder="email" onChange={setEmail} />
-      <div className="LoginPasswordContainer">
-        <TextInput
-          icon="lock"
-          type="password"
-          placeholder="password"
-          onChange={setPassword}
-        />
-      </div>
-      <div className="LoginButtonAndErrorMessageContainer">
-        <Button primary fullWidth type="submit" disabled={isButtonDisabled}>
-          {isLoggingIn ? 'Please wait...' : 'Login'}
-        </Button>
-        {errorMessage && (
-          <div className="LoginErrorMessage">{errorMessage}</div>
-        )}
-      </div>
-    </form>
+    <div className="LoginContainer">
+      <h1 className="LoginHeader">
+        <Logo size={56} />
+        My Planner
+      </h1>
+      <form onSubmit={onSubmit}>
+        <TextInput icon="envelope" placeholder="email" onChange={setEmail} />
+        <div className="LoginPasswordContainer">
+          <TextInput
+            icon="lock"
+            type="password"
+            placeholder="password"
+            onChange={setPassword}
+          />
+        </div>
+        <div className="LoginButtonAndErrorMessageContainer">
+          <Button primary fullWidth type="submit" disabled={isButtonDisabled}>
+            {isLoggingIn ? 'Please wait...' : 'Login'}
+          </Button>
+          {errorMessage && (
+            <div className="LoginErrorMessage">{errorMessage}</div>
+          )}
+        </div>
+      </form>
+    </div>
   );
 }
 
