@@ -17,8 +17,6 @@ import {
   DATE_STR_FORMAT,
   ERROR_DIALOG,
   CALENDAR_PAGE,
-  SHOPPING_ITEMS_PAGE,
-  SHOPPING_CATEGORIES_PAGE,
 } from './constants';
 
 const today = getToday();
@@ -27,6 +25,7 @@ const initialState = {
   user: null,
   todoOwners: null,
   activePage: getActivePageFromLocalStorage(CALENDAR_PAGE),
+  backButtonPage: null,
   today,
   headerDate: today,
   isHeaderMenuOpen: false,
@@ -57,6 +56,7 @@ function reducer(state, action) {
         user,
         todoOwners: null,
         activePage: getActivePageFromLocalStorage(CALENDAR_PAGE),
+        backButtonPage: null,
         today,
         headerDate: today,
         isHeaderMenuOpen: false,
@@ -114,20 +114,13 @@ function reducer(state, action) {
     }
 
     case 'UPDATE_ACTIVE_PAGE': {
-      const { activePage } = action;
-      let { isHeaderMenuOpen } = state;
-
-      if (
-        activePage === SHOPPING_ITEMS_PAGE ||
-        activePage === SHOPPING_CATEGORIES_PAGE
-      ) {
-        isHeaderMenuOpen = false;
-      }
+      const { activePage, backButtonPage } = action;
 
       return {
         ...state,
         activePage,
-        isHeaderMenuOpen,
+        backButtonPage: backButtonPage || null,
+        isHeaderMenuOpen: false,
       };
     }
 

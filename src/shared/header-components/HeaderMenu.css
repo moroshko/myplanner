@@ -4,30 +4,23 @@
 .HeaderMenuDotsButton {
   display: flex;
 }
-.HeaderMenuDotsButton:focus {
-  outline: 0;
+.HeaderMenuContainer {
+  position: relative;
 }
-.HeaderMenuList {
+.HeaderMenu {
   position: absolute;
   right: 0;
   top: 46px;
   z-index: 1;
+  min-width: 160px;
   background-color: #fff;
   color: var(--grey-100);
   border-radius: 4px;
   box-shadow: var(--box-shadow-3);
 }
-.HeaderMenuListItemsContainer {
+.HeaderMenuItemsContainer {
   padding: 8px 0;
 }
-.HeaderMenuListItem {
-  padding: 11px 16px;
-  white-space: nowrap;
-  cursor: pointer;
-}
-.HeaderMenuListItem:hover {
-  background-color: var(--grey-20);
-}
-.HeaderMenuListItemsSeparator {
+.HeaderMenuItemsSeparator {
   background-color: var(--grey-30);
 }

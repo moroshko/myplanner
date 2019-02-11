@@ -8,20 +8,18 @@ import {
   CALENDAR_PAGE,
   TODOS_PAGE,
   SHOPPING_PAGE,
-  SHOPPING_ITEMS_PAGE,
-  SHOPPING_CATEGORIES_PAGE,
 } from './constants';
 import './Footer.css';
 
 function Footer() {
   const { state, dispatchChange } = useContext(AppContext);
-  const { activePage } = state;
-  const isCalendarActive = activePage === CALENDAR_PAGE;
-  const isTodosActive = activePage === TODOS_PAGE;
+  const { activePage, backButtonPage } = state;
+  const isCalendarActive =
+    activePage === CALENDAR_PAGE || backButtonPage === CALENDAR_PAGE;
+  const isTodosActive =
+    activePage === TODOS_PAGE || backButtonPage === TODOS_PAGE;
   const isShoppingActive =
-    activePage === SHOPPING_PAGE ||
-    activePage === SHOPPING_ITEMS_PAGE ||
-    activePage === SHOPPING_CATEGORIES_PAGE;
+    activePage === SHOPPING_PAGE || backButtonPage === SHOPPING_PAGE;
   const onCalendarButtonClick = useCallback(() => {
     dispatchChange({
       type: 'UPDATE_ACTIVE_PAGE',

@@ -1,0 +1,8 @@
+.HeaderMenuItem {
+  padding: 11px 16px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.HeaderMenuItem:hover {
+  background-color: var(--grey-20);
+}

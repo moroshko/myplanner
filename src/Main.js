@@ -15,6 +15,8 @@ import ShoppingItemsHeader from './shopping_items/ShoppingItemsHeader';
 import ShoppingItemsMain from './shopping_items/ShoppingItemsMain';
 import ShoppingCategoriesHeader from './shopping_categories/ShoppingCategoriesHeader';
 import ShoppingCategoriesMain from './shopping_categories/ShoppingCategoriesMain';
+import SettingsHeader from './settings/SettingsHeader';
+import SettingsMain from './settings/SettingsMain';
 import Footer from './Footer';
 import ErrorDialog from './shared/ErrorDialog';
 import NewCalendarTodoDialog from './calendar/NewCalendarTodoDialog';
@@ -46,6 +48,7 @@ import {
   SHOPPING_PAGE,
   SHOPPING_ITEMS_PAGE,
   SHOPPING_CATEGORIES_PAGE,
+  SETTINGS_PAGE,
 } from './constants';
 import './Main.css';
 
@@ -159,6 +162,12 @@ function App() {
             <>
               <ShoppingCategoriesHeader />
               <ShoppingCategoriesMain />
+            </>
+          )}
+          {activePage === SETTINGS_PAGE && (
+            <>
+              <SettingsHeader />
+              <SettingsMain />
             </>
           )}
           <Footer />

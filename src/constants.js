@@ -35,4 +35,6 @@ export const TODOS_PAGE = 'Todos';
 export const SHOPPING_PAGE = 'Shopping';
 export const SHOPPING_ITEMS_PAGE = 'Shopping Items';
 export const SHOPPING_CATEGORIES_PAGE = 'Shopping Categories';
+export const SETTINGS_PAGE = 'Settings';
+
 export const SHOPPING_CATEGORY_CHECKED_ITEMS_ID = 'checked-items';
