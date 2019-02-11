@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { format } from 'date-fns';
 import Badge from './shared/Badge';
 import { isDebugInfoVisible } from './shared/sharedUtils';
 import useNetworkStatus from './hooks/useNetworkStatus';
@@ -9,8 +8,7 @@ import './DebugInfo.css';
 
 function DebugInfo() {
   const { state } = useContext(AppContext);
-  const { user, debugInfo } = state;
-  const { lastTodayCheck } = debugInfo;
+  const { user } = state;
   const isOnline = useNetworkStatus();
 
   if (!isDebugInfoVisible(user)) {
@@ -28,13 +26,6 @@ function DebugInfo() {
           text={isOnline ? 'online' : 'offline'}
         />
       </div>
-      {lastTodayCheck !== null && (
-        <div className="DebugInfoBadge">
-          <Badge
-            text={`today checked: ${format(lastTodayCheck, 'MMM d, HH:mm')}`}
-          />
-        </div>
-      )}
     </div>
   );
 }

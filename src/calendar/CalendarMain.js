@@ -10,7 +10,7 @@ import debounce from 'lodash.debounce';
 import { getMonth, getYear, format, addDays, differenceInDays } from 'date-fns';
 import { VariableSizeList as List } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
-import { getNow, isDebugInfoVisible } from '../shared/sharedUtils';
+import { isDebugInfoVisible } from '../shared/sharedUtils';
 import { AppContext } from '../reducer';
 import CalendarDay from './CalendarDay';
 import useWindowSize from '../hooks/useWindowSize';
@@ -161,21 +161,11 @@ function CalendarMain(_props, ref) {
   useEffect(() => {
     const intervalID = setInterval(() => {
       dispatchChange({
-        type: 'UPDATE_LAST_TODAY_CHECK',
-        lastTodayCheck: getNow(),
-      });
-
-      dispatchChange({
         type: 'UPDATE_TODAY',
       });
     }, 60000); // 1 minute
 
     return () => {
-      dispatchChange({
-        type: 'UPDATE_LAST_TODAY_CHECK',
-        lastTodayCheck: null,
-      });
-
       clearInterval(intervalID);
     };
   }, []);
