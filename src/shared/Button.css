@@ -8,10 +8,6 @@
   padding: 8px 16px;
   border-radius: 4px;
 }
-.Button:hover {
-  background-color: var(--grey-20);
-  box-shadow: var(--box-shadow-1);
-}
 .Button:active {
   box-shadow: none;
 }
@@ -22,6 +18,15 @@
 }
 .ButtonPrimary:hover:not(.ButtonDisabled) {
   background-color: var(--primary-50);
+}
+.ButtonSecondary:hover {
+  background-color: var(--grey-20);
+  box-shadow: var(--box-shadow-1);
+}
+.ButtonTertiary {
+  padding: 0;
+  align-self: flex-start;
+  color: var(--grey-70);
 }
 .ButtonDanger {
   color: var(--red-60);

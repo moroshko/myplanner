@@ -33,7 +33,7 @@ function uppercaseFirstLetterOfEveryWord(str) {
 }
 
 function isDebugInfoVisible(user) {
-  return user.email === 'michael.moroshko@gmail.com';
+  return user && user.email === 'michael.moroshko@gmail.com';
 }
 
 export {

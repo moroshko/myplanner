@@ -1,9 +1,10 @@
 import React, { useState, useCallback, useContext } from 'react';
-import Logo from './Logo';
-import TextInput from './shared/TextInput';
-import Button from './shared/Button';
-import { signIn } from './authAPI';
-import { AppContext } from './reducer';
+import Logo from '../Logo';
+import TextInput from '../shared/TextInput';
+import Button from '../shared/Button';
+import { signIn } from '../authAPI';
+import { AppContext } from '../reducer';
+import { NO_ACCOUNT_PAGE } from '../constants';
 import './Login.css';
 
 function Login() {
@@ -40,6 +41,15 @@ function Login() {
     },
     [email, password]
   );
+  const onHideErrorMessageClick = useCallback(() => {
+    setErrorMessage(null);
+  }, []);
+  const onNoAccountClick = useCallback(() => {
+    dispatchChange({
+      type: 'UPDATE_ACTIVE_PAGE',
+      activePage: NO_ACCOUNT_PAGE,
+    });
+  }, []);
 
   return (
     <div className="LoginContainer">
@@ -62,10 +72,20 @@ function Login() {
             {isLoggingIn ? 'Please wait...' : 'Login'}
           </Button>
           {errorMessage && (
-            <div className="LoginErrorMessage">{errorMessage}</div>
+            <div className="LoginErrorMessage">
+              {errorMessage}
+              <Button tertiary onClick={onHideErrorMessageClick}>
+                Hide
+              </Button>
+            </div>
           )}
         </div>
       </form>
+      <div className="LoginExtraButtons">
+        <Button tertiary onClick={onNoAccountClick}>
+          I don't have an account
+        </Button>
+      </div>
     </div>
   );
 }

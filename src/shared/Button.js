@@ -5,6 +5,8 @@ import './Button.css';
 function Button({
   type,
   primary,
+  secondary,
+  tertiary,
   danger,
   fullWidth,
   disabled,
@@ -15,6 +17,8 @@ function Button({
     <button
       className={classNames('Button', {
         ButtonPrimary: primary,
+        ButtonSecondary: secondary || (!primary && !tertiary),
+        ButtonTertiary: tertiary,
         ButtonDanger: danger,
         ButtonFullWidth: fullWidth,
         ButtonDisabled: disabled,

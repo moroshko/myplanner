@@ -19,6 +19,7 @@ import {
   TEMP_USER_SETTINGS_CALENDAR_DAYS_BACK,
   TODOS_PAGE,
   SHOPPING_PAGE,
+  LOGIN_PAGE,
 } from './constants';
 
 function getInitialCalendarState() {
@@ -53,13 +54,11 @@ function getInitialShoppingState() {
   };
 }
 
-function getInitialState(user) {
+function getInitialState() {
   return {
-    loadingUser: user
-      ? false
-      : getFirebaseAppNameFromLocalStorage(null) !== null,
-    user: user || null,
-    activePage: getActivePageFromLocalStorage(CALENDAR_PAGE),
+    loadingUser: getFirebaseAppNameFromLocalStorage(null) !== null,
+    user: null,
+    activePage: LOGIN_PAGE, // When Firebase app name is unknown, we don't subscribe to auth changes, and want to show the Login page.
     backButtonPage: null,
     isHeaderMenuOpen: false,
     isAutoSuggestOpen: false,
@@ -76,7 +75,15 @@ function reducer(state, action) {
     case 'UPDATE_USER': {
       const { user } = action;
 
-      return getInitialState(user);
+      return {
+        ...getInitialState(user),
+        loadingUser: false,
+        user,
+        activePage:
+          user === null
+            ? LOGIN_PAGE
+            : getActivePageFromLocalStorage(CALENDAR_PAGE),
+      };
     }
 
     case 'UPDATE_TODO_OWNERS': {

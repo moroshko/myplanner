@@ -23,5 +23,11 @@
   position: absolute;
   left: 0;
   top: 72px;
+  width: 100%;
+  min-height: 72px;
   color: var(--red-70);
+  background-color: #fff;
+}
+.LoginExtraButtons {
+  margin-top: 36px;
 }

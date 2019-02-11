@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useCallback, useContext } from 'react';
 import classNames from 'classnames';
 import { onAuthStateChanged } from './authAPI';
 import { AppContext } from './reducer';
-import Login from './Login';
+import Login from './login/Login';
+import NoAccountHeader from './no_account/NoAccountHeader';
+import NoAccountMain from './no_account/NoAccountMain';
 import DebugInfo from './DebugInfo';
 import CalendarHeader from './calendar/CalendarHeader';
 import CalendarMain from './calendar/CalendarMain';
@@ -42,6 +44,8 @@ import {
   EDIT_SHOPPING_LIST_ITEM_DIALOG,
   DELETE_CHECKED_SHOPPING_LIST_ITEMS_CONFIRMATION_DIALOG,
   MAX_WIDTH,
+  LOGIN_PAGE,
+  NO_ACCOUNT_PAGE,
   CALENDAR_PAGE,
   TODOS_PAGE,
   SHOPPING_PAGE,
@@ -62,6 +66,8 @@ function App() {
     openDialogName,
     openDialogData,
   } = state;
+  const isFooterVisible =
+    [LOGIN_PAGE, NO_ACCOUNT_PAGE].includes(activePage) === false;
   const onOverlayClick = useCallback(() => {
     dispatchChange({
       type: 'HIDE_OVERLAY',
@@ -103,11 +109,16 @@ function App() {
 
   return (
     <div className="MainContainer" style={{ maxWidth: MAX_WIDTH }}>
-      {loadingUser ? null : user === null ? (
-        <Login />
-      ) : (
+      {loadingUser ? null : (
         <>
           <DebugInfo />
+          {activePage === LOGIN_PAGE && <Login />}
+          {activePage === NO_ACCOUNT_PAGE && (
+            <>
+              <NoAccountHeader />
+              <NoAccountMain />
+            </>
+          )}
           {activePage === CALENDAR_PAGE && (
             <>
               <CalendarHeader
@@ -148,7 +159,7 @@ function App() {
               <SettingsMain />
             </>
           )}
-          <Footer />
+          {isFooterVisible && <Footer />}
           {(isHeaderMenuOpen ||
             isAutoSuggestOpen ||
             openDialogName !== null) && (
