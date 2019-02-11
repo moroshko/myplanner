@@ -65,9 +65,6 @@ function getInitialState(user) {
     isAutoSuggestOpen: false,
     openDialogName: null,
     openDialogData: null,
-    debugInfo: {
-      lastTodayCheck: null,
-    },
     ...getInitialCalendarState(),
     ...getInitialTodosState(),
     ...getInitialShoppingState(),
@@ -97,18 +94,6 @@ function reducer(state, action) {
       return {
         ...state,
         today,
-      };
-    }
-
-    case 'UPDATE_LAST_TODAY_CHECK': {
-      const { lastTodayCheck } = action;
-
-      return {
-        ...state,
-        debugInfo: {
-          ...state.debugInfo,
-          lastTodayCheck,
-        },
       };
     }
 
