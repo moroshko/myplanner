@@ -1,6 +1,13 @@
-import React, { useEffect, useContext, useCallback, useRef } from 'react';
+import React, {
+  forwardRef,
+  useEffect,
+  useContext,
+  useCallback,
+  useRef,
+  useImperativeHandle,
+} from 'react';
 import debounce from 'lodash.debounce';
-import { getMonth, getYear, format, addDays } from 'date-fns';
+import { getMonth, getYear, format, addDays, differenceInDays } from 'date-fns';
 import { VariableSizeList as List } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
 import { getNow, isDebugInfoVisible } from '../shared/sharedUtils';
@@ -18,11 +25,13 @@ import {
   HEADER_HEIGHT,
   FOOTER_HEIGHT,
   DATE_STR_FORMAT,
+  CALENDAR_INITIAL_DAYS,
+  TEMP_USER_SETTINGS_CALENDAR_DAYS_BACK,
 } from '../constants';
 
-function CalendarMain() {
+function CalendarMain(_props, ref) {
   const { state, dispatchChange } = useContext(AppContext);
-  const { user, firstCalendarDate, headerDate, calendarData } = state;
+  const { user, today, firstCalendarDate, headerDate, calendarData } = state;
   const visibleDataIndices = useRef({
     start: null,
     stop: null,
@@ -138,6 +147,16 @@ function CalendarMain() {
     }, 1000),
     [firstCalendarDate]
   );
+  const scrollToToday = useCallback(() => {
+    const todayIndex = differenceInDays(today, firstCalendarDate);
+
+    listRef.current.scrollToItem(todayIndex, 'start');
+  }, [today, firstCalendarDate]);
+
+  // We expose `scrollToToday` so that when the Header title is clicked, we scroll to today.
+  useImperativeHandle(ref, () => ({
+    scrollToToday,
+  }));
 
   useEffect(() => {
     const intervalID = setInterval(() => {
@@ -162,6 +181,33 @@ function CalendarMain() {
   }, []);
 
   useEffect(() => {
+    const daysCount =
+      TEMP_USER_SETTINGS_CALENDAR_DAYS_BACK + CALENDAR_INITIAL_DAYS;
+
+    getCalendarTodos({
+      fromDate: firstCalendarDate,
+      days: daysCount,
+    })
+      .then(todos => {
+        dispatchChange({
+          type: 'ADD_CALENDAR_TODOS',
+          todos,
+          startIndex: 0,
+          stopIndex: daysCount - 1,
+        });
+      })
+      .catch(error => {
+        dispatchChange({
+          type: 'FAILED_TO_LOAD_CALENDAR_TODOS',
+          startIndex: 0,
+          stopIndex: daysCount - 1,
+          errorMessage: error.message,
+        });
+      })
+      .finally(scrollToToday);
+  }, [firstCalendarDate]);
+
+  useEffect(() => {
     return () => {
       if (subscriptionRef.current !== null) {
         subscriptionRef.current();
@@ -169,7 +215,7 @@ function CalendarMain() {
     };
   }, []);
 
-  return (
+  return calendarData.length === 0 ? null : (
     <InfiniteLoader
       isItemLoaded={isItemLoaded}
       loadMoreItems={loadMoreItems}
@@ -224,4 +270,4 @@ function CalendarMain() {
   );
 }
 
-export default CalendarMain;
+export default forwardRef(CalendarMain);

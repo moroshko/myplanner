@@ -1,7 +1,7 @@
 import React from 'react';
 import groupBy from 'lodash.groupby';
 import isEqual from 'lodash.isequal';
-import { parse, differenceInDays, subDays } from 'date-fns';
+import { parse, differenceInDays, addDays, subDays } from 'date-fns';
 import { getToday } from './shared/sharedUtils';
 import { getEmptyCalendarDays } from './calendar/calendarUtils';
 import {
@@ -13,50 +13,64 @@ import {
 import {
   STATUS_LOADING,
   STATUS_LOADED,
-  CALENDAR_INITIAL_DAYS,
   DATE_STR_FORMAT,
   ERROR_DIALOG,
   CALENDAR_PAGE,
+  TEMP_USER_SETTINGS_CALENDAR_DAYS_BACK,
+  TODOS_PAGE,
+  SHOPPING_PAGE,
 } from './constants';
 
-function getInitialState(user) {
+function getInitialCalendarState() {
   const today = getToday();
-  const TEMP_USER_SETTINGS_CALENDAR_DAYS_BACK = 0;
   const firstCalendarDate = subDays(
     today,
     TEMP_USER_SETTINGS_CALENDAR_DAYS_BACK
   );
 
   return {
-    loadingUser: user
-      ? false
-      : getFirebaseAppNameFromLocalStorage(null) !== null,
-    user: user || null,
-    todoOwners: null,
-    activePage: getActivePageFromLocalStorage(CALENDAR_PAGE),
-    backButtonPage: null,
     today,
     firstCalendarDate,
-    headerDate: firstCalendarDate,
-    isHeaderMenuOpen: false,
-    isAutoSuggestOpen: false,
-    calendarData: user
-      ? getEmptyCalendarDays({
-          fromDate: firstCalendarDate,
-          days: CALENDAR_INITIAL_DAYS + TEMP_USER_SETTINGS_CALENDAR_DAYS_BACK,
-        })
-      : null,
-    openDialogName: null,
-    openDialogData: null,
+    headerDate: today, // Not `firstCalendarDate` because we scroll to today by default.
+    calendarData: [],
+  };
+}
+
+function getInitialTodosState() {
+  return {
+    todoOwners: null,
     todosOwnerFilter: getTodosOwnerFilterFromLocalStorage(null),
     todos: null,
+  };
+}
+
+function getInitialShoppingState() {
+  return {
     shoppingCategories: null,
     groupedShoppingItems: null,
     groupedShoppingListItems: null,
     isShopping: getIsShoppingFromLocalStorage(false),
+  };
+}
+
+function getInitialState(user) {
+  return {
+    loadingUser: user
+      ? false
+      : getFirebaseAppNameFromLocalStorage(null) !== null,
+    user: user || null,
+    activePage: getActivePageFromLocalStorage(CALENDAR_PAGE),
+    backButtonPage: null,
+    isHeaderMenuOpen: false,
+    isAutoSuggestOpen: false,
+    openDialogName: null,
+    openDialogData: null,
     debugInfo: {
       lastTodayCheck: null,
     },
+    ...getInitialCalendarState(),
+    ...getInitialTodosState(),
+    ...getInitialShoppingState(),
   };
 }
 
@@ -100,12 +114,35 @@ function reducer(state, action) {
 
     case 'UPDATE_ACTIVE_PAGE': {
       const { activePage, backButtonPage } = action;
+      let pageSpecificUpdate;
+
+      switch (activePage) {
+        case CALENDAR_PAGE: {
+          pageSpecificUpdate = getInitialCalendarState();
+          break;
+        }
+
+        case TODOS_PAGE: {
+          pageSpecificUpdate = getInitialTodosState();
+          break;
+        }
+
+        case SHOPPING_PAGE: {
+          pageSpecificUpdate = getInitialShoppingState();
+          break;
+        }
+
+        default: {
+          pageSpecificUpdate = {};
+        }
+      }
 
       return {
         ...state,
         activePage,
         backButtonPage: backButtonPage || null,
         isHeaderMenuOpen: false,
+        ...pageSpecificUpdate,
       };
     }
 
@@ -171,6 +208,14 @@ function reducer(state, action) {
           ...newCalendarData[i],
           status: STATUS_LOADED,
         };
+
+        if (!newCalendarData[i].todos) {
+          newCalendarData[i].todos = [];
+        }
+
+        if (!newCalendarData[i].date) {
+          newCalendarData[i].date = addDays(firstCalendarDate, i);
+        }
       }
 
       // Add the retrieved todos
@@ -194,7 +239,7 @@ function reducer(state, action) {
 
     case 'FAILED_TO_LOAD_CALENDAR_TODOS': {
       const { startIndex, stopIndex, errorMessage } = action;
-      const { calendarData } = state;
+      const { firstCalendarDate, calendarData } = state;
       const newCalendarData = [...calendarData];
 
       // Mark all retrieved days as LOADED
@@ -203,6 +248,14 @@ function reducer(state, action) {
           ...newCalendarData[i],
           status: STATUS_LOADED,
         };
+
+        if (!newCalendarData[i].todos) {
+          newCalendarData[i].todos = [];
+        }
+
+        if (!newCalendarData[i].date) {
+          newCalendarData[i].date = addDays(firstCalendarDate, i);
+        }
       }
 
       return {

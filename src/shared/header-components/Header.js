@@ -5,7 +5,13 @@ import { AppContext } from '../../reducer';
 import { HEADER_HEIGHT } from '../../constants';
 import './Header.css';
 
-function Header({ title, highlighted, withBackButtonTo, children }) {
+function Header({
+  title,
+  onTitleClick,
+  highlighted,
+  withBackButtonTo,
+  children,
+}) {
   const { dispatchChange } = useContext(AppContext);
   const onBackButtonClick = useCallback(() => {
     dispatchChange({
@@ -26,7 +32,14 @@ function Header({ title, highlighted, withBackButtonTo, children }) {
           <LeftArrowIcon backgroundType="dark" />
         </button>
       )}
-      <div className="HeaderTitle">{title}</div>
+      <div
+        className={classNames('HeaderTitle', {
+          HeaderTitleClickable: onTitleClick != null,
+        })}
+        onClick={onTitleClick}
+      >
+        {title}
+      </div>
       <div className="HeaderButtonsContainer">{children}</div>
     </div>
   );

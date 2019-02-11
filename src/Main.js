@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useCallback, useContext } from 'react';
 import classNames from 'classnames';
 import { onAuthStateChanged } from './authAPI';
 import { AppContext } from './reducer';
-import { getUserGroup } from './userAPI';
 import Login from './Login';
 import DebugInfo from './DebugInfo';
 import CalendarHeader from './calendar/CalendarHeader';
@@ -81,6 +80,7 @@ function App() {
     [loadingUser, user]
   );
   const authStateUnsubscribe = useRef();
+  const calendarMainRef = useRef();
 
   useEffect(() => {
     // If user === null, we want to subscribe to auth state changes,
@@ -93,32 +93,6 @@ function App() {
             user: newUser,
           });
         }
-      });
-    }
-
-    if (user !== null) {
-      getUserGroup(user.uid).then(userGroup => {
-        const owners = userGroup.users.map(owner => ({
-          uid: owner.uid,
-          name: owner.name,
-          photoUrl: owner.photoUrl,
-        }));
-        const userIndex = owners.findIndex(owner => owner.uid === user.uid);
-        const [currentUser] = owners.splice(userIndex, 1);
-        const ownersWithCurrentUserFirst = [currentUser, ...owners];
-        const todoOwners = [
-          {
-            uid: null,
-            name: null,
-            photoUrl: null,
-          },
-          ...ownersWithCurrentUserFirst,
-        ];
-
-        dispatchChange({
-          type: 'UPDATE_TODO_OWNERS',
-          todoOwners,
-        });
       });
     }
 
@@ -136,8 +110,12 @@ function App() {
           <DebugInfo />
           {activePage === CALENDAR_PAGE && (
             <>
-              <CalendarHeader />
-              <CalendarMain />
+              <CalendarHeader
+                onTitleClick={() => {
+                  calendarMainRef.current.scrollToToday();
+                }}
+              />
+              <CalendarMain ref={calendarMainRef} />
             </>
           )}
           {activePage === TODOS_PAGE && (

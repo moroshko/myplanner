@@ -19,6 +19,9 @@
   font-size: var(--font-size-5);
   font-family: var(--font-header-bold);
 }
+.HeaderTitleClickable {
+  cursor: pointer;
+}
 .HeaderButtonsContainer {
   display: flex;
   align-items: center;
