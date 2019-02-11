@@ -4,7 +4,7 @@ export const PROD_APP = 'prod';
 
 export const STATUS_LOADING = 1;
 export const STATUS_LOADED = 2;
-export const INITIAL_DAYS = 14;
+export const CALENDAR_INITIAL_DAYS = 14;
 export const LOAD_MORE_COUNT = 30;
 
 export const MAX_WIDTH = 450;

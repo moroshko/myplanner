@@ -13,67 +13,53 @@ import {
 import {
   STATUS_LOADING,
   STATUS_LOADED,
-  INITIAL_DAYS,
+  CALENDAR_INITIAL_DAYS,
   DATE_STR_FORMAT,
   ERROR_DIALOG,
   CALENDAR_PAGE,
 } from './constants';
 
-const today = getToday();
-const initialState = {
-  loadingUser: getFirebaseAppNameFromLocalStorage(null) !== null,
-  user: null,
-  todoOwners: null,
-  activePage: getActivePageFromLocalStorage(CALENDAR_PAGE),
-  backButtonPage: null,
-  today,
-  headerDate: today,
-  isHeaderMenuOpen: false,
-  isAutoSuggestOpen: false,
-  calendarData: getEmptyCalendarDays({ fromDate: today, days: INITIAL_DAYS }),
-  openDialogName: null,
-  openDialogData: null,
-  todosOwnerFilter: getTodosOwnerFilterFromLocalStorage(null),
-  todos: null,
-  shoppingCategories: null,
-  groupedShoppingItems: null,
-  groupedShoppingListItems: null,
-  isShopping: getIsShoppingFromLocalStorage(false),
-  debugInfo: {
-    lastTodayCheck: null,
-  },
-};
+function getInitialState() {
+  const today = getToday();
+
+  return {
+    loadingUser: getFirebaseAppNameFromLocalStorage(null) !== null,
+    user: null,
+    todoOwners: null,
+    activePage: getActivePageFromLocalStorage(CALENDAR_PAGE),
+    backButtonPage: null,
+    today,
+    headerDate: today,
+    isHeaderMenuOpen: false,
+    isAutoSuggestOpen: false,
+    calendarData: getEmptyCalendarDays({
+      fromDate: today,
+      days: CALENDAR_INITIAL_DAYS,
+    }),
+    openDialogName: null,
+    openDialogData: null,
+    todosOwnerFilter: getTodosOwnerFilterFromLocalStorage(null),
+    todos: null,
+    shoppingCategories: null,
+    groupedShoppingItems: null,
+    groupedShoppingListItems: null,
+    isShopping: getIsShoppingFromLocalStorage(false),
+    debugInfo: {
+      lastTodayCheck: null,
+    },
+  };
+}
 
 function reducer(state, action) {
   switch (action.type) {
     case 'UPDATE_USER': {
       const { user } = action;
-      const today = getToday();
 
       return {
         ...state,
+        ...getInitialState(),
         loadingUser: false,
         user,
-        todoOwners: null,
-        activePage: getActivePageFromLocalStorage(CALENDAR_PAGE),
-        backButtonPage: null,
-        today,
-        headerDate: today,
-        isHeaderMenuOpen: false,
-        isAutoSuggestOpen: false,
-        calendarData: getEmptyCalendarDays({
-          fromDate: today,
-          days: INITIAL_DAYS,
-        }),
-        todosOwnerFilter: getTodosOwnerFilterFromLocalStorage(null),
-        todos: null,
-        shoppingCategories: null,
-        groupedShoppingItems: null,
-        groupedShoppingListItems: null,
-        isShopping: getIsShoppingFromLocalStorage(false),
-        debugInfo: {
-          lastTodayCheck: null,
-        },
       };
     }
 
@@ -454,4 +440,4 @@ function reducer(state, action) {
 
 const AppContext = React.createContext(null);
 
-export { initialState, reducer, AppContext };
+export { getInitialState, reducer, AppContext };
