@@ -30,57 +30,69 @@ function CalendarMain() {
   const subscriptionRef = useRef(null);
   const listRef = useRef(null);
   const { width, height } = useWindowSize();
-  const isItemLoaded = index => {
-    return calendarData[index] && calendarData[index].status != null;
-  };
-  const getItemSize = index => {
-    const todosCount =
-      calendarData[index] == null ? 0 : calendarData[index].todos.length;
+  const isItemLoaded = useCallback(
+    index => {
+      return calendarData[index] && calendarData[index].status != null;
+    },
+    [calendarData]
+  );
+  const getItemSize = useCallback(
+    index => {
+      const todosCount =
+        calendarData[index] == null ? 0 : calendarData[index].todos.length;
 
-    // ListHeader height = 32px
-    // ListItem height = 48px
-    return 32 + 48 * Math.max(1, todosCount);
-  };
-  const itemKey = index => {
-    return format(calendarData[index].date, DATE_STR_FORMAT);
-  };
-  const loadMoreItems = (startIndex, stopIndex) => {
-    const fromDate = addDays(firstCalendarDate, startIndex);
-    const days = stopIndex - startIndex + 1;
+      // ListHeader height = 32px
+      // ListItem height = 48px
+      return 32 + 48 * Math.max(1, todosCount);
+    },
+    [calendarData]
+  );
+  const itemKey = useCallback(
+    index => {
+      return format(calendarData[index].date, DATE_STR_FORMAT);
+    },
+    [calendarData]
+  );
+  const loadMoreItems = useCallback(
+    (startIndex, stopIndex) => {
+      const fromDate = addDays(firstCalendarDate, startIndex);
+      const days = stopIndex - startIndex + 1;
 
-    dispatchChange({
-      type: 'ADD_EMPTY_CALENDAR_DAYS',
-      fromDate,
-      days,
-      startIndex,
-      stopIndex,
-    });
-
-    return getCalendarTodos({
-      fromDate,
-      days,
-    })
-      .then(todos => {
-        dispatchChange({
-          type: 'ADD_CALENDAR_TODOS',
-          todos,
-          startIndex,
-          stopIndex,
-        });
-
-        if (listRef.current !== null) {
-          listRef.current.resetAfterIndex(startIndex);
-        }
-      })
-      .catch(error => {
-        dispatchChange({
-          type: 'FAILED_TO_LOAD_CALENDAR_TODOS',
-          startIndex,
-          stopIndex,
-          errorMessage: error.message,
-        });
+      dispatchChange({
+        type: 'ADD_EMPTY_CALENDAR_DAYS',
+        fromDate,
+        days,
+        startIndex,
+        stopIndex,
       });
-  };
+
+      return getCalendarTodos({
+        fromDate,
+        days,
+      })
+        .then(todos => {
+          dispatchChange({
+            type: 'ADD_CALENDAR_TODOS',
+            todos,
+            startIndex,
+            stopIndex,
+          });
+
+          if (listRef.current !== null) {
+            listRef.current.resetAfterIndex(startIndex);
+          }
+        })
+        .catch(error => {
+          dispatchChange({
+            type: 'FAILED_TO_LOAD_CALENDAR_TODOS',
+            startIndex,
+            stopIndex,
+            errorMessage: error.message,
+          });
+        });
+    },
+    [firstCalendarDate]
+  );
   const dayRenderer = ({ index, style }) => {
     const { date, todos, status } = calendarData[index];
 
