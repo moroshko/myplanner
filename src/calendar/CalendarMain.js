@@ -1,9 +1,9 @@
 import React, { useEffect, useContext, useCallback, useRef } from 'react';
 import debounce from 'lodash.debounce';
-import { getMonth, getYear, format, addDays, isSameDay } from 'date-fns';
+import { getMonth, getYear, format, addDays } from 'date-fns';
 import { VariableSizeList as List } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
-import { getNow, getToday, isDebugInfoVisible } from '../shared/sharedUtils';
+import { getNow, isDebugInfoVisible } from '../shared/sharedUtils';
 import { AppContext } from '../reducer';
 import CalendarDay from './CalendarDay';
 import useWindowSize from '../hooks/useWindowSize';
@@ -22,7 +22,7 @@ import {
 
 function CalendarMain() {
   const { state, dispatchChange } = useContext(AppContext);
-  const { user, today, headerDate, calendarData } = state;
+  const { user, firstCalendarDate, headerDate, calendarData } = state;
   const visibleDataIndices = useRef({
     start: null,
     stop: null,
@@ -45,7 +45,7 @@ function CalendarMain() {
     return format(calendarData[index].date, DATE_STR_FORMAT);
   };
   const loadMoreItems = (startIndex, stopIndex) => {
-    const fromDate = addDays(today, startIndex);
+    const fromDate = addDays(firstCalendarDate, startIndex);
     const days = stopIndex - startIndex + 1;
 
     dispatchChange({
@@ -112,8 +112,8 @@ function CalendarMain() {
 
       const startIndex = Math.max(0, visibleDataIndices.current.start - 7);
       const stopIndex = visibleDataIndices.current.stop + 7;
-      const fromDate = addDays(today, startIndex);
-      const toDate = addDays(today, stopIndex);
+      const fromDate = addDays(firstCalendarDate, startIndex);
+      const toDate = addDays(firstCalendarDate, stopIndex);
 
       subscriptionRef.current = subscribeToCalendarTodosUpdates({
         fromDate,
@@ -124,7 +124,7 @@ function CalendarMain() {
         onError: onUpdateError,
       });
     }, 1000),
-    []
+    [firstCalendarDate]
   );
 
   useEffect(() => {
@@ -134,15 +134,9 @@ function CalendarMain() {
         lastTodayCheck: getNow(),
       });
 
-      if (!isSameDay(calendarData[0].date, getToday())) {
-        dispatchChange({
-          type: 'UPDATE_TODAY',
-        });
-
-        if (listRef.current !== null) {
-          listRef.current.resetAfterIndex(0);
-        }
-      }
+      dispatchChange({
+        type: 'UPDATE_TODAY',
+      });
     }, 60000); // 1 minute
 
     return () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import groupBy from 'lodash.groupby';
 import isEqual from 'lodash.isequal';
-import { parse, differenceInDays, isSameDay } from 'date-fns';
+import { parse, differenceInDays, subDays } from 'date-fns';
 import { getToday } from './shared/sharedUtils';
 import { getEmptyCalendarDays } from './calendar/calendarUtils';
 import {
@@ -19,23 +19,33 @@ import {
   CALENDAR_PAGE,
 } from './constants';
 
-function getInitialState() {
+function getInitialState(user) {
   const today = getToday();
+  const TEMP_USER_SETTINGS_CALENDAR_DAYS_BACK = 0;
+  const firstCalendarDate = subDays(
+    today,
+    TEMP_USER_SETTINGS_CALENDAR_DAYS_BACK
+  );
 
   return {
-    loadingUser: getFirebaseAppNameFromLocalStorage(null) !== null,
-    user: null,
+    loadingUser: user
+      ? false
+      : getFirebaseAppNameFromLocalStorage(null) !== null,
+    user: user || null,
     todoOwners: null,
     activePage: getActivePageFromLocalStorage(CALENDAR_PAGE),
     backButtonPage: null,
     today,
-    headerDate: today,
+    firstCalendarDate,
+    headerDate: firstCalendarDate,
     isHeaderMenuOpen: false,
     isAutoSuggestOpen: false,
-    calendarData: getEmptyCalendarDays({
-      fromDate: today,
-      days: CALENDAR_INITIAL_DAYS,
-    }),
+    calendarData: user
+      ? getEmptyCalendarDays({
+          fromDate: firstCalendarDate,
+          days: CALENDAR_INITIAL_DAYS + TEMP_USER_SETTINGS_CALENDAR_DAYS_BACK,
+        })
+      : null,
     openDialogName: null,
     openDialogData: null,
     todosOwnerFilter: getTodosOwnerFilterFromLocalStorage(null),
@@ -55,12 +65,7 @@ function reducer(state, action) {
     case 'UPDATE_USER': {
       const { user } = action;
 
-      return {
-        ...state,
-        ...getInitialState(),
-        loadingUser: false,
-        user,
-      };
+      return getInitialState(user);
     }
 
     case 'UPDATE_TODO_OWNERS': {
@@ -73,17 +78,11 @@ function reducer(state, action) {
     }
 
     case 'UPDATE_TODAY': {
-      const { calendarData } = state;
       const today = getToday();
-      const todayIndex = calendarData.findIndex(({ date }) =>
-        isSameDay(date, today)
-      );
 
       return {
         ...state,
         today,
-        headerDate: today,
-        calendarData: calendarData.slice(todayIndex),
       };
     }
 
@@ -163,7 +162,7 @@ function reducer(state, action) {
     case 'ADD_CALENDAR_TODOS': {
       const { todos, startIndex, stopIndex } = action;
       const groupedTodos = groupBy(todos, 'dateStr');
-      const { today, calendarData } = state;
+      const { firstCalendarDate, calendarData } = state;
       const newCalendarData = [...calendarData];
 
       // Mark all retrieved days as LOADED
@@ -177,8 +176,8 @@ function reducer(state, action) {
       // Add the retrieved todos
       Object.keys(groupedTodos).forEach(dateStr => {
         const newDataIndex = differenceInDays(
-          parse(dateStr, DATE_STR_FORMAT, today),
-          today
+          parse(dateStr, DATE_STR_FORMAT, firstCalendarDate),
+          firstCalendarDate
         );
 
         newCalendarData[newDataIndex] = {
@@ -219,7 +218,7 @@ function reducer(state, action) {
     case 'UPDATE_CALENDAR_TODOS': {
       const { startIndex, stopIndex, todos } = action;
       const groupedTodos = groupBy(todos, 'dateStr');
-      const { today, calendarData } = state;
+      const { firstCalendarDate, calendarData } = state;
       const newCalendarData = [...calendarData];
 
       // Clear all updated days from todos
@@ -234,8 +233,8 @@ function reducer(state, action) {
       // Add all updated todos
       Object.keys(groupedTodos).forEach(dateStr => {
         const newDataIndex = differenceInDays(
-          parse(dateStr, DATE_STR_FORMAT, today),
-          today
+          parse(dateStr, DATE_STR_FORMAT, firstCalendarDate),
+          firstCalendarDate
         );
 
         newCalendarData[newDataIndex] = {
