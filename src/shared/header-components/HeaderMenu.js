@@ -2,6 +2,7 @@ import React, { useCallback, useContext } from 'react';
 import HeaderMenuItem from './HeaderMenuItem';
 import VerticalDotsIcon from '../../icons/VerticalDotsIcon';
 import { AppContext } from '../../reducer';
+import { canCreateGroup } from '../../usersUtils';
 import { signOut } from '../../authAPI';
 import {
   SHOPPING_PAGE,
@@ -56,7 +57,7 @@ function HeaderMenu() {
                 </HeaderMenuItem>
               </>
             )}
-            {user.email === 'michael.moroshko@gmail.com' && (
+            {canCreateGroup(user) && (
               <HeaderMenuItem to={NEW_GROUP_PAGE}>
                 Create New Group
               </HeaderMenuItem>

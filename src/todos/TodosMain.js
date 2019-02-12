@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useCallback, useContext } from 'react';
 import TodosFilters from './TodosFilters';
 import TodosList from './TodosList';
 import { AppContext } from '../reducer';
-import { getUserGroup } from '../userAPI';
+import { getUserGroup } from '../usersAPI';
 import { getTodos, subscribeToTodosUpdates } from './todosAPI';
 import { ERROR_DIALOG } from '../constants';
 import './TodosMain.css';
