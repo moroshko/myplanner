@@ -59,7 +59,7 @@ function getApp() {
   const appName = getFirebaseAppNameFromLocalStorage(null);
 
   if (appName === null) {
-    throw new Error('Firebase app name is missing in local storage');
+    throw new Error('Firebase app name is missing in local storage.');
   }
 
   try {

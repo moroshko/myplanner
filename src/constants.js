@@ -31,8 +31,9 @@ export const EDIT_SHOPPING_ITEM_DIALOG = 10;
 export const EDIT_SHOPPING_LIST_ITEM_DIALOG = 11;
 export const DELETE_CHECKED_SHOPPING_LIST_ITEMS_CONFIRMATION_DIALOG = 12;
 
+// It's useful to have page values descriptive because we store them in local storage.
 export const LOGIN_PAGE = 'Login';
-export const NO_ACCOUNT_PAGE = 'No Account';
+export const NEW_GROUP_PAGE = 'New Group';
 export const CALENDAR_PAGE = 'Calendar';
 export const TODOS_PAGE = 'Todos';
 export const SHOPPING_PAGE = 'Shopping';

@@ -1,8 +1,19 @@
 import React from 'react';
+import classNames from 'classnames';
+
 import './Label.css';
 
-function Label({ text }) {
-  return <label className="Label">{text}</label>;
+function Label({ size, text, htmlFor }) {
+  return (
+    <label
+      className={classNames('Label', {
+        LabelSmall: size === 'small',
+      })}
+      htmlFor={htmlFor}
+    >
+      {text}
+    </label>
+  );
 }
 
 export default Label;

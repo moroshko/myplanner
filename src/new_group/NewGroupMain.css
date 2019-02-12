@@ -1,0 +1,22 @@
+.NewGroupMain {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  width: 320px;
+  max-width: 90%;
+  align-self: center;
+}
+.NewGroupMainButtonAndErrorMessageContainer {
+  position: relative;
+  margin-top: 16px;
+}
+.NewGroupMainErrorMessage {
+  position: absolute;
+  left: 0;
+  top: 72px;
+  width: 100%;
+  min-height: 72px;
+  color: var(--red-70);
+  background-color: #fff;
+}

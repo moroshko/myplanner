@@ -1,4 +1,11 @@
 .TextInputContainer {
+  display: flex;
+  flex-direction: column;
+}
+.TextInputLabel {
+  margin-bottom: 4px;
+}
+.TextInputInnerContainer {
   position: relative;
   display: flex;
 }

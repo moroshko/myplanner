@@ -16,7 +16,7 @@ function DialogTextInput({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        autoFocus={true}
+        autoFocus
       />
       {helperText && (
         <div

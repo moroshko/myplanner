@@ -4,7 +4,7 @@ import TextInput from '../shared/TextInput';
 import Button from '../shared/Button';
 import { signIn } from '../authAPI';
 import { AppContext } from '../reducer';
-import { NO_ACCOUNT_PAGE } from '../constants';
+import { NEW_GROUP_PAGE } from '../constants';
 import './Login.css';
 
 function Login() {
@@ -44,10 +44,10 @@ function Login() {
   const onHideErrorMessageClick = useCallback(() => {
     setErrorMessage(null);
   }, []);
-  const onNoAccountClick = useCallback(() => {
+  const onCreateNewGroupClick = useCallback(() => {
     dispatchChange({
       type: 'UPDATE_ACTIVE_PAGE',
-      activePage: NO_ACCOUNT_PAGE,
+      activePage: NEW_GROUP_PAGE,
     });
   }, []);
 
@@ -82,8 +82,8 @@ function Login() {
         </div>
       </form>
       <div className="LoginExtraButtons">
-        <Button tertiary onClick={onNoAccountClick}>
-          I don't have an account
+        <Button tertiary onClick={onCreateNewGroupClick}>
+          Create New Group
         </Button>
       </div>
     </div>

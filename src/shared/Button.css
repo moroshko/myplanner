@@ -8,12 +8,11 @@
   padding: 8px 16px;
   border-radius: 4px;
 }
-.Button:active {
-  box-shadow: none;
-}
 .ButtonPrimary {
   color: var(--primary-100);
   background-color: var(--primary-40);
+}
+.ButtonPrimary:not(.ButtonDisabled):not(:active) {
   box-shadow: var(--box-shadow-1);
 }
 .ButtonPrimary:hover:not(.ButtonDisabled) {
@@ -21,6 +20,8 @@
 }
 .ButtonSecondary:hover {
   background-color: var(--grey-20);
+}
+.ButtonSecondary:hover:not(:active) {
   box-shadow: var(--box-shadow-1);
 }
 .ButtonTertiary {
@@ -39,12 +40,17 @@
   height: 56px;
   justify-content: center;
 }
+.ButtonFullWidth.ButtonSecondary {
+  background-color: var(--grey-20);
+}
+.ButtonFullWidth.ButtonSecondary:not(:active) {
+  box-shadow: var(--box-shadow-1);
+}
+.ButtonFullWidth.ButtonSecondary:not(.ButtonDisabled):hover {
+  background-color: var(--grey-30);
+}
 .ButtonDisabled {
   color: var(--grey-40);
   background-color: var(--grey-20);
   cursor: default;
-  box-shadow: none;
-}
-.ButtonDisabled:hover {
-  box-shadow: none;
 }

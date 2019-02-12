@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import { onAuthStateChanged } from './authAPI';
 import { AppContext } from './reducer';
 import Login from './login/Login';
-import NoAccountHeader from './no_account/NoAccountHeader';
-import NoAccountMain from './no_account/NoAccountMain';
+import NewGroupHeader from './new_group/NewGroupHeader';
+import NewGroupMain from './new_group/NewGroupMain';
 import DebugInfo from './DebugInfo';
 import CalendarHeader from './calendar/CalendarHeader';
 import CalendarMain from './calendar/CalendarMain';
@@ -45,7 +45,7 @@ import {
   DELETE_CHECKED_SHOPPING_LIST_ITEMS_CONFIRMATION_DIALOG,
   MAX_WIDTH,
   LOGIN_PAGE,
-  NO_ACCOUNT_PAGE,
+  NEW_GROUP_PAGE,
   CALENDAR_PAGE,
   TODOS_PAGE,
   SHOPPING_PAGE,
@@ -67,7 +67,7 @@ function App() {
     openDialogData,
   } = state;
   const isFooterVisible =
-    [LOGIN_PAGE, NO_ACCOUNT_PAGE].includes(activePage) === false;
+    [LOGIN_PAGE, NEW_GROUP_PAGE].includes(activePage) === false;
   const onOverlayClick = useCallback(() => {
     dispatchChange({
       type: 'HIDE_OVERLAY',
@@ -113,10 +113,10 @@ function App() {
         <>
           <DebugInfo />
           {activePage === LOGIN_PAGE && <Login />}
-          {activePage === NO_ACCOUNT_PAGE && (
+          {activePage === NEW_GROUP_PAGE && (
             <>
-              <NoAccountHeader />
-              <NoAccountMain />
+              <NewGroupHeader />
+              <NewGroupMain />
             </>
           )}
           {activePage === CALENDAR_PAGE && (
