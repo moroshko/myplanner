@@ -5,7 +5,6 @@ import { parse, differenceInDays, addDays, subDays } from 'date-fns';
 import { getToday } from './shared/sharedUtils';
 import { getEmptyCalendarDays } from './calendar/calendarUtils';
 import {
-  getFirebaseAppNameFromLocalStorage,
   getActivePageFromLocalStorage,
   getTodosOwnerFilterFromLocalStorage,
   getIsShoppingFromLocalStorage,
@@ -56,7 +55,7 @@ function getInitialShoppingState() {
 
 function getInitialState() {
   return {
-    loadingUser: getFirebaseAppNameFromLocalStorage(null) !== null,
+    loadingUser: true,
     user: null,
     activePage: LOGIN_PAGE, // When Firebase app name is unknown, we don't subscribe to auth changes, and want to show the Login page.
     backButtonPage: null,

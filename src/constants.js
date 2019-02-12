@@ -1,7 +1,3 @@
-export const DEV_APP = 'dev';
-export const TEST_APP = 'test';
-export const PROD_APP = 'prod';
-
 export const STATUS_LOADING = 1;
 export const STATUS_LOADED = 2;
 export const CALENDAR_INITIAL_DAYS = 14;

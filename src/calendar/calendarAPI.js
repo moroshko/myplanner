@@ -1,5 +1,5 @@
 import { format, addDays } from 'date-fns';
-import { getDb } from '../firebase';
+import { db } from '../firebase';
 import {
   parseCalendarTodoText,
   timeStrTo24hours,
@@ -8,7 +8,7 @@ import {
 import { DATE_STR_FORMAT } from '../constants';
 
 function getCalendarCollection() {
-  return getDb().collection('calendar');
+  return db.collection('calendar');
 }
 
 function createCalendarTodo({ date, text }) {

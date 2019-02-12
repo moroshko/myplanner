@@ -1,28 +1,15 @@
-import { getAppNameForUser, getAuth } from './firebase';
-import { setFirebaseAppNameToLocalStorage } from './localStorage';
-
-function isTestUser(email) {
-  return /myplanner_testuser/.test(email);
-}
+import { auth } from './firebase';
 
 function signIn({ email, password }) {
-  const appName = getAppNameForUser(isTestUser(email));
-
-  setFirebaseAppNameToLocalStorage(appName);
-
-  return getAuth().signInWithEmailAndPassword(email, password);
+  return auth.signInWithEmailAndPassword(email, password);
 }
 
 function onAuthStateChanged(callback) {
-  return getAuth().onAuthStateChanged(callback);
+  return auth.onAuthStateChanged(callback);
 }
 
 function signOut() {
-  return getAuth()
-    .signOut()
-    .then(() => {
-      setFirebaseAppNameToLocalStorage(null);
-    });
+  return auth.signOut();
 }
 
 export { signIn, onAuthStateChanged, signOut };

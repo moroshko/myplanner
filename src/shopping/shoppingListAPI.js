@@ -1,6 +1,6 @@
 import groupBy from 'lodash.groupby';
 import sortBy from 'lodash.sortby';
-import { getDb, getDeleteField } from '../firebase';
+import { db, deleteField } from '../firebase';
 import {
   getShoppingItem,
   getShoppingItemInTransaction,
@@ -10,7 +10,7 @@ import { cleanShoppingListItemNote } from './shoppingListItemsUtils';
 import { timestamp } from '../shared/sharedUtils';
 
 function getShoppingListItemsCollection() {
-  return getDb().collection('shopping_list_items');
+  return db.collection('shopping_list_items');
 }
 
 async function addShoppingListItem({ shoppingItemId }) {
@@ -136,7 +136,7 @@ async function updateShoppingListItemNote({ id, note }) {
   const cleanNote = cleanShoppingListItemNote(note);
 
   return shoppingListItemRef.update({
-    note: cleanNote ? cleanNote : getDeleteField()(),
+    note: cleanNote ? cleanNote : deleteField(),
   });
 }
 
@@ -187,7 +187,7 @@ async function deleteAllCheckedShoppingListItems() {
   const uncheckedCount =
     shoppingListItems.length - checkedShoppingListItems.length;
 
-  return getDb().runTransaction(async transaction => {
+  return db.runTransaction(async transaction => {
     const shoppingItems = await Promise.all(
       checkedShoppingListItems.map(
         async ({ shoppingItemId }) =>

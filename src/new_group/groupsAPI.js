@@ -1,8 +1,8 @@
-import { getDb } from '../firebase';
+import { db } from '../firebase';
 import { isGroupValid, cleanGroupName } from './groupsUtils';
 
 function getGroupsCollection() {
-  return getDb().collection('groups');
+  return db.collection('groups');
 }
 
 async function createGroup({ name }) {

@@ -1,14 +1,14 @@
-import { getDb } from '../firebase';
+import { db } from '../firebase';
 import { getShoppingItemsInCategory } from '../shopping_items/shoppingItemsAPI';
 import { cleanShoppingCategoryName } from './shoppingCategoriesUtils';
 import { pluralize } from '../shared/sharedUtils';
 
 function getShoppingCategoriesCollection() {
-  return getDb().collection('shopping_categories');
+  return db.collection('shopping_categories');
 }
 
 function createShoppingCategory({ name }) {
-  return getDb().runTransaction(async transaction => {
+  return db.runTransaction(async transaction => {
     const cleanName = cleanShoppingCategoryName(name);
     const shoppingCategories = await getShoppingCategories();
     const alreadyExists = shoppingCategories.some(
@@ -79,7 +79,7 @@ function getShoppingCategories() {
 }
 
 function updateShoppingCategoriesIndices(updates) {
-  const batch = getDb().batch();
+  const batch = db.batch();
 
   updates.forEach(({ id, index }) => {
     batch.update(getShoppingCategoriesCollection().doc(id), { index });
@@ -110,7 +110,7 @@ async function updateShoppingCategory({ id, name }) {
 }
 
 function deleteShoppingCategory({ id }) {
-  return getDb().runTransaction(async transaction => {
+  return db.runTransaction(async transaction => {
     const shoppingItems = await getShoppingItemsInCategory(id);
 
     if (shoppingItems.length > 0) {

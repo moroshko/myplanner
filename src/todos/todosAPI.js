@@ -1,12 +1,12 @@
-import { getDb } from '../firebase';
+import { db } from '../firebase';
 import { cleanTodoDescription } from './todosUtils';
 
 function getTodosCollection() {
-  return getDb().collection('todos');
+  return db.collection('todos');
 }
 
 function createTodo({ description, ownerUid }) {
-  return getDb().runTransaction(async transaction => {
+  return db.runTransaction(async transaction => {
     const todos = await getTodos();
     const todosCount = todos.length;
     const ownerFirstIndex = todos.findIndex(todo => todo.ownerUid === ownerUid);
@@ -61,7 +61,7 @@ function getTodos() {
 }
 
 function updateTodosIndices(updates) {
-  const batch = getDb().batch();
+  const batch = db.batch();
 
   updates.forEach(({ id, index }) => {
     batch.update(getTodosCollection().doc(id), { index });
@@ -96,7 +96,7 @@ async function updateTodo({ id, description, ownerUid }) {
 
   // when the owner is updated, we potentially need to move todos both of the
   // current owner and the new owner.
-  return getDb().runTransaction(async transaction => {
+  return db.runTransaction(async transaction => {
     const todos = await getTodos();
     const todosCount = todos.length;
     const currentOwnerFirstIndex = todos.findIndex(
@@ -145,7 +145,7 @@ async function updateTodo({ id, description, ownerUid }) {
 }
 
 function deleteTodo({ id }) {
-  return getDb().runTransaction(async transaction => {
+  return db.runTransaction(async transaction => {
     const todos = await getTodos();
     const todosCount = todos.length;
     const todoIndex = todos.findIndex(todo => todo.id === id);

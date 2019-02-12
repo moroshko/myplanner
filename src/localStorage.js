@@ -1,7 +1,6 @@
 const STRING = 0;
 const BOOLEAN = 1;
 const PREFIX = 'my-planner::';
-const FIREBASE_APP_NAME = 'firebaseAppName';
 const ACTIVE_PAGE = 'activePage';
 const TODOS_OWNER_FILTER = 'todosOwnerFilter';
 const IS_SHOPPING = 'isShopping';
@@ -46,14 +45,6 @@ function getLocalStorageItem(key, type, defaultValue) {
   throw new Error(`Unknown local storage type: ${type}`);
 }
 
-function getFirebaseAppNameFromLocalStorage(defaultValue) {
-  return getLocalStorageItem(FIREBASE_APP_NAME, STRING, defaultValue);
-}
-
-function setFirebaseAppNameToLocalStorage(value) {
-  setLocalStorageItem(FIREBASE_APP_NAME, value);
-}
-
 function getActivePageFromLocalStorage(defaultValue) {
   return getLocalStorageItem(ACTIVE_PAGE, STRING, defaultValue);
 }
@@ -79,8 +70,6 @@ function setIsShoppingToLocalStorage(value) {
 }
 
 export {
-  getFirebaseAppNameFromLocalStorage,
-  setFirebaseAppNameToLocalStorage,
   getActivePageFromLocalStorage,
   setActivePageToLocalStorage,
   getTodosOwnerFilterFromLocalStorage,

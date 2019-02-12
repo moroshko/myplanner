@@ -4,7 +4,6 @@ import TextInput from '../shared/TextInput';
 import Button from '../shared/Button';
 import { signIn } from '../authAPI';
 import { AppContext } from '../reducer';
-import { NEW_GROUP_PAGE } from '../constants';
 import './Login.css';
 
 function Login() {
@@ -44,11 +43,8 @@ function Login() {
   const onHideErrorMessageClick = useCallback(() => {
     setErrorMessage(null);
   }, []);
-  const onCreateNewGroupClick = useCallback(() => {
-    dispatchChange({
-      type: 'UPDATE_ACTIVE_PAGE',
-      activePage: NEW_GROUP_PAGE,
-    });
+  const onForgotPasswordClick = useCallback(() => {
+    // TODO
   }, []);
 
   return (
@@ -82,8 +78,8 @@ function Login() {
         </div>
       </form>
       <div className="LoginExtraButtons">
-        <Button tertiary onClick={onCreateNewGroupClick}>
-          Create New Group
+        <Button tertiary onClick={onForgotPasswordClick}>
+          I forgot my password
         </Button>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import groupBy from 'lodash.groupby';
-import { getDb } from '../firebase';
+import { db } from '../firebase';
 import {
   getShoppingCategory,
   getShoppingCategories,
@@ -8,7 +8,7 @@ import { getShoppingListItem } from '../shopping/shoppingListAPI';
 import { cleanShoppingItemName } from './shoppingItemsUtils';
 
 function getShoppingItemsCollection() {
-  return getDb().collection('shopping_items');
+  return db.collection('shopping_items');
 }
 
 async function createShoppingItem({ name, shoppingCategoryId }) {

@@ -2,23 +2,22 @@ import React, { useCallback, useContext } from 'react';
 import { AppContext } from '../../reducer';
 import './HeaderMenuItem.css';
 
-function HeaderMenuItem({ toPageWithBackButton, onClick, children }) {
+function HeaderMenuItem({ to, onClick, children }) {
   const { state, dispatchChange } = useContext(AppContext);
   const { activePage, backButtonPage } = state;
   const onMenuItemClick = useCallback(() => {
-    if (toPageWithBackButton) {
+    if (to) {
       dispatchChange({
         type: 'UPDATE_ACTIVE_PAGE',
-        activePage: toPageWithBackButton,
-        backButtonPage:
-          toPageWithBackButton === activePage ? backButtonPage : activePage,
+        activePage: to,
+        backButtonPage: to === activePage ? backButtonPage : activePage,
       });
     }
 
     if (onClick) {
       onClick();
     }
-  }, [toPageWithBackButton, onClick, activePage, backButtonPage]);
+  }, [to, onClick, activePage, backButtonPage]);
 
   return (
     <div className="HeaderMenuItem" onClick={onMenuItemClick}>

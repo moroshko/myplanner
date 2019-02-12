@@ -30,7 +30,6 @@ import NewShoppingCategoryDialog from './shopping_categories/NewShoppingCategory
 import EditShoppingCategoryDialog from './shopping_categories/EditShoppingCategoryDialog';
 import EditShoppingListItemDialog from './shopping/EditShoppingListItemDialog';
 import DeleteCheckedShoppingListItemsConfirmationDialog from './shopping/DeleteCheckedShoppingListItemsConfirmationDialog';
-import { getFirebaseAppNameFromLocalStorage } from './localStorage';
 import {
   ERROR_DIALOG,
   NEW_CALENDAR_TODO_DIALOG,
@@ -55,11 +54,10 @@ import {
 } from './constants';
 import './Main.css';
 
-function App() {
+function Main() {
   const { state, dispatchChange } = useContext(AppContext);
   const {
     loadingUser,
-    user,
     activePage,
     isHeaderMenuOpen,
     isAutoSuggestOpen,
@@ -75,37 +73,16 @@ function App() {
 
     openDialogData && openDialogData.onClose && openDialogData.onClose();
   }, [openDialogData]);
-  const isSameUser = useCallback(
-    newUser => {
-      return (
-        !loadingUser &&
-        ((newUser === null && user === null) ||
-          (newUser !== null && user !== null && newUser.uid === user.uid))
-      );
-    },
-    [loadingUser, user]
-  );
-  const authStateUnsubscribe = useRef();
   const calendarMainRef = useRef();
 
   useEffect(() => {
-    // If user === null, we want to subscribe to auth state changes,
-    // so that if the user already logged in we skip the login page.
-    if (getFirebaseAppNameFromLocalStorage(null) !== null) {
-      authStateUnsubscribe.current = onAuthStateChanged(newUser => {
-        if (!isSameUser(newUser)) {
-          dispatchChange({
-            type: 'UPDATE_USER',
-            user: newUser,
-          });
-        }
+    return onAuthStateChanged(user => {
+      dispatchChange({
+        type: 'UPDATE_USER',
+        user,
       });
-    }
-
-    return () => {
-      authStateUnsubscribe.current && authStateUnsubscribe.current();
-    };
-  }, [user]);
+    });
+  }, []);
 
   return (
     <div className="MainContainer" style={{ maxWidth: MAX_WIDTH }}>
@@ -205,4 +182,4 @@ function App() {
   );
 }
 
-export default App;
+export default Main;

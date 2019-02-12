@@ -3,11 +3,11 @@ import TextInput from '../shared/TextInput';
 import Button from '../shared/Button';
 import { createGroup } from './groupsAPI';
 import { AppContext } from '../reducer';
-import { LOGIN_PAGE } from '../constants';
 import './NewGroupMain.css';
 
 function NewGroupMain() {
-  const { dispatchChange } = useContext(AppContext);
+  const { state, dispatchChange } = useContext(AppContext);
+  const { backButtonPage } = state;
   const [groupName, setGroupName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -24,7 +24,7 @@ function NewGroupMain() {
         .then(() => {
           dispatchChange({
             type: 'UPDATE_ACTIVE_PAGE',
-            activePage: LOGIN_PAGE,
+            activePage: backButtonPage,
           });
 
           // NewGroupMain will be unmounted at this point.
@@ -35,7 +35,7 @@ function NewGroupMain() {
           setIsCreating(false);
         });
     },
-    [groupName]
+    [backButtonPage, groupName]
   );
 
   return (

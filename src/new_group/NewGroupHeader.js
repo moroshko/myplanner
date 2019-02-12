@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Header } from '../shared/header-components';
-import { LOGIN_PAGE } from '../constants';
+import { AppContext } from '../reducer';
 
 function NewGroupHeader() {
-  return <Header title="New Group" withBackButtonTo={LOGIN_PAGE} />;
+  const { state } = useContext(AppContext);
+  const { backButtonPage } = state;
+
+  return <Header title="New Group" withBackButtonTo={backButtonPage} />;
 }
 
 export default NewGroupHeader;
