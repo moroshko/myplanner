@@ -43,8 +43,9 @@ function NewDialogDialog() {
       <DialogHeader title="New Group" />
       <DialogContent>
         <DialogTextInput
-          placeholder="e.g. moroshko"
+          placeholder="e.g. your last name"
           value={name}
+          helperText="Can contain a-z and _ only, start with a letter, and be at least 2 characters long."
           onChange={setName}
         />
       </DialogContent>
