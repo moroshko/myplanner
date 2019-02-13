@@ -45,7 +45,7 @@ function NewDialogDialog() {
         <DialogTextInput
           placeholder="e.g. your last name"
           value={name}
-          helperText="Can contain a-z and _ only, start with a letter, and be at least 2 characters long."
+          helperText="Should contain a-z and _ only, start with a letter, and be at least 2 characters long."
           onChange={setName}
         />
       </DialogContent>
