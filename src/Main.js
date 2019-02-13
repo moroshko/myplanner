@@ -3,8 +3,10 @@ import classNames from 'classnames';
 import { onAuthStateChanged } from './authAPI';
 import { AppContext } from './reducer';
 import Login from './login/Login';
-import NewGroupHeader from './new_group/NewGroupHeader';
-import NewGroupMain from './new_group/NewGroupMain';
+import GroupsHeader from './groups/GroupsHeader';
+import GroupsMain from './groups/GroupsMain';
+import UsersHeader from './users/UsersHeader';
+import UsersMain from './users/UsersMain';
 import DebugInfo from './DebugInfo';
 import CalendarHeader from './calendar/CalendarHeader';
 import CalendarMain from './calendar/CalendarMain';
@@ -20,6 +22,7 @@ import SettingsHeader from './settings/SettingsHeader';
 import SettingsMain from './settings/SettingsMain';
 import Footer from './Footer';
 import ErrorDialog from './shared/ErrorDialog';
+import NewGroupDialog from './groups/NewGroupDialog';
 import NewCalendarTodoDialog from './calendar/NewCalendarTodoDialog';
 import EditCalendarTodoDialog from './calendar/EditCalendarTodoDialog';
 import NewTodoDialog from './todos/NewTodoDialog';
@@ -32,6 +35,7 @@ import EditShoppingListItemDialog from './shopping/EditShoppingListItemDialog';
 import DeleteCheckedShoppingListItemsConfirmationDialog from './shopping/DeleteCheckedShoppingListItemsConfirmationDialog';
 import {
   ERROR_DIALOG,
+  NEW_GROUP_DIALOG,
   NEW_CALENDAR_TODO_DIALOG,
   EDIT_CALENDAR_TODO_DIALOG,
   NEW_TODO_DIALOG,
@@ -44,7 +48,8 @@ import {
   DELETE_CHECKED_SHOPPING_LIST_ITEMS_CONFIRMATION_DIALOG,
   MAX_WIDTH,
   LOGIN_PAGE,
-  NEW_GROUP_PAGE,
+  GROUPS_PAGE,
+  USERS_PAGE,
   CALENDAR_PAGE,
   TODOS_PAGE,
   SHOPPING_PAGE,
@@ -64,8 +69,7 @@ function Main() {
     openDialogName,
     openDialogData,
   } = state;
-  const isFooterVisible =
-    [LOGIN_PAGE, NEW_GROUP_PAGE].includes(activePage) === false;
+  const isFooterVisible = activePage !== LOGIN_PAGE;
   const onOverlayClick = useCallback(() => {
     dispatchChange({
       type: 'HIDE_OVERLAY',
@@ -90,10 +94,16 @@ function Main() {
         <>
           <DebugInfo />
           {activePage === LOGIN_PAGE && <Login />}
-          {activePage === NEW_GROUP_PAGE && (
+          {activePage === GROUPS_PAGE && (
             <>
-              <NewGroupHeader />
-              <NewGroupMain />
+              <GroupsHeader />
+              <GroupsMain />
+            </>
+          )}
+          {activePage === USERS_PAGE && (
+            <>
+              <UsersHeader />
+              <UsersMain />
             </>
           )}
           {activePage === CALENDAR_PAGE && (
@@ -147,6 +157,7 @@ function Main() {
               onClick={onOverlayClick}
             >
               {openDialogName === ERROR_DIALOG && <ErrorDialog />}
+              {openDialogName === NEW_GROUP_DIALOG && <NewGroupDialog />}
               {openDialogName === NEW_CALENDAR_TODO_DIALOG && (
                 <NewCalendarTodoDialog />
               )}

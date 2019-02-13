@@ -1,5 +1,5 @@
-function canCreateGroup(user) {
+function isAdmin(user) {
   return user.email === 'michael.moroshko@gmail.com';
 }
 
-export { canCreateGroup };
+export { isAdmin };

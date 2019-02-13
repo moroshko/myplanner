@@ -2,13 +2,14 @@ import React, { useCallback, useContext } from 'react';
 import HeaderMenuItem from './HeaderMenuItem';
 import VerticalDotsIcon from '../../icons/VerticalDotsIcon';
 import { AppContext } from '../../reducer';
-import { canCreateGroup } from '../../usersUtils';
+import { isAdmin } from '../../usersUtils';
 import { signOut } from '../../authAPI';
 import {
   SHOPPING_PAGE,
   SHOPPING_ITEMS_PAGE,
   SHOPPING_CATEGORIES_PAGE,
-  NEW_GROUP_PAGE,
+  GROUPS_PAGE,
+  USERS_PAGE,
   SETTINGS_PAGE,
   ERROR_DIALOG,
 } from '../../constants';
@@ -57,10 +58,11 @@ function HeaderMenu() {
                 </HeaderMenuItem>
               </>
             )}
-            {canCreateGroup(user) && (
-              <HeaderMenuItem to={NEW_GROUP_PAGE}>
-                Create New Group
-              </HeaderMenuItem>
+            {isAdmin(user) && (
+              <>
+                <HeaderMenuItem to={GROUPS_PAGE}>Groups</HeaderMenuItem>
+                <HeaderMenuItem to={USERS_PAGE}>Users</HeaderMenuItem>
+              </>
             )}
             <HeaderMenuItem to={SETTINGS_PAGE}>Settings</HeaderMenuItem>
           </div>

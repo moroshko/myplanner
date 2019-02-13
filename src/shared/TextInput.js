@@ -8,6 +8,7 @@ import './TextInput.css';
 function TextInput({
   label,
   icon,
+  type,
   helperText,
   onChange,
   inputRef,
@@ -49,7 +50,7 @@ function TextInput({
         )}
         <input
           id={id}
-          type="text"
+          type={type || 'text'}
           {...restProps}
           className={classNames('TextInput', {
             TextInputWithIcon: icon,

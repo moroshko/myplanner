@@ -15,21 +15,24 @@ export const INVALID_TIME = 'Invalid Time';
 export const NO_TIME_SPECIFIED_MESSAGE = 'No time specified';
 export const FOOTER_HEIGHT = 57; // 56px + 1px border top
 
-export const ERROR_DIALOG = 2;
-export const NEW_CALENDAR_TODO_DIALOG = 3;
-export const EDIT_CALENDAR_TODO_DIALOG = 4;
-export const NEW_TODO_DIALOG = 5;
-export const EDIT_TODO_DIALOG = 6;
-export const NEW_SHOPPING_CATEGORY_DIALOG = 7;
-export const EDIT_SHOPPING_CATEGORY_DIALOG = 8;
-export const NEW_SHOPPING_ITEM_DIALOG = 9;
-export const EDIT_SHOPPING_ITEM_DIALOG = 10;
-export const EDIT_SHOPPING_LIST_ITEM_DIALOG = 11;
-export const DELETE_CHECKED_SHOPPING_LIST_ITEMS_CONFIRMATION_DIALOG = 12;
+export const NEW_GROUP_DIALOG = 1;
+export const NEW_USER_DIALOG = 2;
+export const ERROR_DIALOG = 3;
+export const NEW_CALENDAR_TODO_DIALOG = 4;
+export const EDIT_CALENDAR_TODO_DIALOG = 5;
+export const NEW_TODO_DIALOG = 6;
+export const EDIT_TODO_DIALOG = 7;
+export const NEW_SHOPPING_CATEGORY_DIALOG = 8;
+export const EDIT_SHOPPING_CATEGORY_DIALOG = 9;
+export const NEW_SHOPPING_ITEM_DIALOG = 10;
+export const EDIT_SHOPPING_ITEM_DIALOG = 11;
+export const EDIT_SHOPPING_LIST_ITEM_DIALOG = 12;
+export const DELETE_CHECKED_SHOPPING_LIST_ITEMS_CONFIRMATION_DIALOG = 13;
 
 // It's useful to have page values descriptive because we store them in local storage.
 export const LOGIN_PAGE = 'Login';
-export const NEW_GROUP_PAGE = 'New Group';
+export const GROUPS_PAGE = 'Groups';
+export const USERS_PAGE = 'Users';
 export const CALENDAR_PAGE = 'Calendar';
 export const TODOS_PAGE = 'Todos';
 export const SHOPPING_PAGE = 'Shopping';
