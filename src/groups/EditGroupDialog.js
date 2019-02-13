@@ -9,19 +9,21 @@ import {
   DialogSubmitButton,
 } from '../shared/dialog-components';
 import { AppContext } from '../reducer';
+import { updateGroup } from './groupsAPI';
 import { isGroupValid } from './groupsUtils';
-import { createGroup } from './groupsAPI';
 import { ERROR_DIALOG } from '../constants';
 
-function NewDialogDialog() {
-  const { dispatchChange } = useContext(AppContext);
-  const [name, setName] = useState('');
-  const onSubmit = useCallback(() => {
+function EditGroupDialog() {
+  const { state, dispatchChange } = useContext(AppContext);
+  const { openDialogData } = state;
+  const [name, setName] = useState(openDialogData.group.name);
+  const onSave = useCallback(() => {
     if (!isGroupValid({ name })) {
       return;
     }
 
-    createGroup({
+    updateGroup({
+      id: openDialogData.group.id,
       name,
     }).catch(error => {
       dispatchChange({
@@ -36,11 +38,11 @@ function NewDialogDialog() {
     dispatchChange({
       type: 'CLOSE_DIALOG',
     });
-  }, [name]);
+  }, [openDialogData.group.id, name]);
 
   return (
-    <Dialog onSubmit={onSubmit}>
-      <DialogHeader title="New Group" />
+    <Dialog onSubmit={onSave}>
+      <DialogHeader title="Edit Group" />
       <DialogContent>
         <DialogTextInput
           placeholder="e.g. your last name"
@@ -51,10 +53,10 @@ function NewDialogDialog() {
       </DialogContent>
       <DialogFooter>
         <DialogCloseButton text="Cancel" />
-        <DialogSubmitButton disabled={!isGroupValid({ name })} text="Create" />
+        <DialogSubmitButton disabled={!isGroupValid({ name })} text="Save" />
       </DialogFooter>
     </Dialog>
   );
 }
 
-export default NewDialogDialog;
+export default EditGroupDialog;

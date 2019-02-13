@@ -23,6 +23,7 @@ import SettingsMain from './settings/SettingsMain';
 import Footer from './Footer';
 import ErrorDialog from './shared/ErrorDialog';
 import NewGroupDialog from './groups/NewGroupDialog';
+import EditGroupDialog from './groups/EditGroupDialog';
 import NewCalendarTodoDialog from './calendar/NewCalendarTodoDialog';
 import EditCalendarTodoDialog from './calendar/EditCalendarTodoDialog';
 import NewTodoDialog from './todos/NewTodoDialog';
@@ -36,6 +37,7 @@ import DeleteCheckedShoppingListItemsConfirmationDialog from './shopping/DeleteC
 import {
   ERROR_DIALOG,
   NEW_GROUP_DIALOG,
+  EDIT_GROUP_DIALOG,
   NEW_CALENDAR_TODO_DIALOG,
   EDIT_CALENDAR_TODO_DIALOG,
   NEW_TODO_DIALOG,
@@ -158,6 +160,7 @@ function Main() {
             >
               {openDialogName === ERROR_DIALOG && <ErrorDialog />}
               {openDialogName === NEW_GROUP_DIALOG && <NewGroupDialog />}
+              {openDialogName === EDIT_GROUP_DIALOG && <EditGroupDialog />}
               {openDialogName === NEW_CALENDAR_TODO_DIALOG && (
                 <NewCalendarTodoDialog />
               )}
