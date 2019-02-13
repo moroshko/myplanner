@@ -1,6 +1,6 @@
 import groupBy from 'lodash.groupby';
 import sortBy from 'lodash.sortby';
-import { db, deleteField } from '../firebase';
+import { db } from '../firebase';
 import {
   getShoppingItem,
   getShoppingItemInTransaction,
@@ -13,20 +13,58 @@ function getShoppingListItemsCollection() {
   return db.collection('shopping_list_items');
 }
 
-async function addShoppingListItem({ shoppingItemId }) {
-  const querySnapshot = await getShoppingListItemsCollection()
-    .where('shoppingItemId', '==', shoppingItemId)
-    .get();
+async function validateShoppingListItem({ id, shoppingItemId }) {
+  let shoppingListItemRef;
 
-  if (querySnapshot.size > 0) {
-    const { name } = await getShoppingItem({ id: shoppingItemId });
+  if (id != null) {
+    shoppingListItemRef = getShoppingListItemsCollection().doc(id);
 
-    throw new Error(`"${name}" already added.`);
+    const shoppingListItemSnapshot = await shoppingListItemRef.get();
+
+    if (!shoppingListItemSnapshot.exists) {
+      throw new Error("This shopping list item doesn't exist anymore.");
+    }
   }
+
+  if (shoppingItemId != null) {
+    const querySnapshot = await getShoppingListItemsCollection()
+      .where('shoppingItemId', '==', shoppingItemId)
+      .get();
+
+    if (querySnapshot.size > 0) {
+      const { name } = await getShoppingItem({ id: shoppingItemId });
+
+      throw new Error(`"${name}" already added.`);
+    }
+  }
+
+  return {
+    shoppingListItemRef,
+  };
+}
+
+async function addShoppingListItem({ shoppingItemId }) {
+  await validateShoppingListItem({ shoppingItemId });
 
   return getShoppingListItemsCollection().add({
     shoppingItemId,
     note: '',
+    checkTimestamp: null,
+  });
+}
+
+async function updateShoppingListItemNote({ id, note }) {
+  const { shoppingListItemRef } = await validateShoppingListItem({ id });
+
+  return shoppingListItemRef.update({
+    note: cleanShoppingListItemNote(note),
+  });
+}
+
+async function uncheckShoppingListItem({ id }) {
+  const { shoppingListItemRef } = await validateShoppingListItem({ id });
+
+  return shoppingListItemRef.update({
     checkTimestamp: null,
   });
 }
@@ -125,21 +163,6 @@ function subscribeToGroupedShoppingListItemsUpdates({ onUpdate, onError }) {
   }, onError);
 }
 
-async function updateShoppingListItemNote({ id, note }) {
-  const shoppingListItemRef = getShoppingListItemsCollection().doc(id);
-  const shoppingListItemSnapshot = await shoppingListItemRef.get();
-
-  if (!shoppingListItemSnapshot.exists) {
-    throw new Error("This shopping list item doesn't exist anymore.");
-  }
-
-  const cleanNote = cleanShoppingListItemNote(note);
-
-  return shoppingListItemRef.update({
-    note: cleanNote ? cleanNote : deleteField(),
-  });
-}
-
 async function checkShoppingListItem({ id }) {
   const shoppingListItemRef = getShoppingListItemsCollection().doc(id);
   const shoppingListItemSnapshot = await shoppingListItemRef.get();
@@ -150,19 +173,6 @@ async function checkShoppingListItem({ id }) {
 
   return shoppingListItemRef.update({
     checkTimestamp: timestamp(),
-  });
-}
-
-async function uncheckShoppingListItem({ id }) {
-  const shoppingListItemRef = getShoppingListItemsCollection().doc(id);
-  const shoppingListItemSnapshot = await shoppingListItemRef.get();
-
-  if (!shoppingListItemSnapshot.exists) {
-    throw new Error("This shopping list item doesn't exist anymore.");
-  }
-
-  return shoppingListItemRef.update({
-    checkTimestamp: null,
   });
 }
 
@@ -214,12 +224,12 @@ async function deleteAllCheckedShoppingListItems() {
 
 export {
   addShoppingListItem,
+  updateShoppingListItemNote,
+  uncheckShoppingListItem,
   getShoppingListItem,
   getGroupedShoppingListItems,
   subscribeToGroupedShoppingListItemsUpdates,
-  updateShoppingListItemNote,
   checkShoppingListItem,
-  uncheckShoppingListItem,
   deleteShoppingListItem,
   deleteAllCheckedShoppingListItems,
 };

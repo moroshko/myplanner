@@ -24,6 +24,5 @@ if (process.env.NODE_ENV === 'production') {
 
 const auth = firebase.auth();
 const db = firebase.firestore();
-const deleteField = firebase.firestore.FieldValue.delete;
 
-export { auth, db, deleteField };
+export { auth, db };
