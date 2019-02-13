@@ -7,18 +7,41 @@ function getShoppingCategoriesCollection() {
   return db.collection('shopping_categories');
 }
 
-function createShoppingCategory({ name }) {
-  return db.runTransaction(async transaction => {
-    const cleanName = cleanShoppingCategoryName(name);
-    const shoppingCategories = await getShoppingCategories();
-    const alreadyExists = shoppingCategories.some(
-      shoppingCategory => shoppingCategory.name === cleanName
-    );
+async function validateShoppingCategory({ id, name }) {
+  let shoppingCategoryRef, cleanName;
 
-    if (alreadyExists) {
+  if (id != null) {
+    shoppingCategoryRef = getShoppingCategoriesCollection().doc(id);
+
+    const documentSnapshot = await shoppingCategoryRef.get();
+
+    if (!documentSnapshot.exists) {
+      throw new Error("This shopping category doesn't exist anymore.");
+    }
+  }
+
+  if (name != null) {
+    cleanName = cleanShoppingCategoryName(name);
+
+    const querySnapshot = await getShoppingCategoriesCollection()
+      .where('name', '==', cleanName)
+      .get();
+
+    if (querySnapshot.size > 0) {
       throw new Error(`"${cleanName}" already exists.`);
     }
+  }
 
+  return {
+    shoppingCategoryRef,
+    cleanName,
+  };
+}
+
+async function createShoppingCategory({ name }) {
+  return db.runTransaction(async transaction => {
+    const { cleanName } = await validateShoppingCategory({ name });
+    const shoppingCategories = await getShoppingCategories();
     const shoppingCategoriesCount = shoppingCategories.length;
     const newShoppingCategoryRef = getShoppingCategoriesCollection().doc();
     const newShoppingCategory = {
@@ -39,6 +62,17 @@ function createShoppingCategory({ name }) {
 
     // add the new shopping category
     transaction.set(newShoppingCategoryRef, newShoppingCategory);
+  });
+}
+
+async function updateShoppingCategory({ id, name }) {
+  const { shoppingCategoryRef, cleanName } = await validateShoppingCategory({
+    id,
+    name,
+  });
+
+  return shoppingCategoryRef.update({
+    name: cleanName,
   });
 }
 
@@ -96,19 +130,6 @@ function subscribeToShoppingCategoriesUpdates({ onUpdate, onError }) {
   }, onError);
 }
 
-async function updateShoppingCategory({ id, name }) {
-  const shoppingCategoryRef = getShoppingCategoriesCollection().doc(id);
-  const shoppingCategorySnapshot = await shoppingCategoryRef.get();
-
-  if (!shoppingCategorySnapshot.exists) {
-    throw new Error("This shopping category doesn't exist anymore.");
-  }
-
-  return shoppingCategoryRef.update({
-    name: cleanShoppingCategoryName(name),
-  });
-}
-
 function deleteShoppingCategory({ id }) {
   return db.runTransaction(async transaction => {
     const shoppingItems = await getShoppingItemsInCategory(id);
@@ -154,10 +175,10 @@ function deleteShoppingCategory({ id }) {
 
 export {
   createShoppingCategory,
+  updateShoppingCategory,
   getShoppingCategory,
   getShoppingCategories,
   updateShoppingCategoriesIndices,
   subscribeToShoppingCategoriesUpdates,
-  updateShoppingCategory,
   deleteShoppingCategory,
 };

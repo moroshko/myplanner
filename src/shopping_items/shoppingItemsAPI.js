@@ -11,25 +11,61 @@ function getShoppingItemsCollection() {
   return db.collection('shopping_items');
 }
 
-async function createShoppingItem({ name, shoppingCategoryId }) {
-  const cleanName = cleanShoppingItemName(name);
-  const querySnapshot = await getShoppingItemsCollection()
-    .where('name', '==', cleanName)
-    .get();
+async function validateShoppingItem({ id, name }) {
+  let shoppingItemRef, cleanName;
 
-  if (querySnapshot.size > 0) {
-    const { shoppingCategoryId } = querySnapshot.docs[0].data();
-    const { name: categoryName } = await getShoppingCategory({
-      id: shoppingCategoryId,
-    });
+  if (id != null) {
+    shoppingItemRef = getShoppingItemsCollection().doc(id);
 
-    throw new Error(`"${cleanName}" already exists in "${categoryName}".`);
+    const documentSnapshot = await shoppingItemRef.get();
+
+    if (!documentSnapshot.exists) {
+      throw new Error("This shopping item doesn't exist anymore.");
+    }
   }
+
+  if (name != null) {
+    cleanName = cleanShoppingItemName(name);
+
+    const querySnapshot = await getShoppingItemsCollection()
+      .where('name', '==', cleanName)
+      .get();
+
+    if (querySnapshot.size > 0) {
+      const { shoppingCategoryId } = querySnapshot.docs[0].data();
+      const { name: categoryName } = await getShoppingCategory({
+        id: shoppingCategoryId,
+      });
+
+      throw new Error(`"${cleanName}" already exists in "${categoryName}".`);
+    }
+  }
+
+  return {
+    shoppingItemRef,
+    cleanName,
+  };
+}
+
+async function createShoppingItem({ name, shoppingCategoryId }) {
+  const { cleanName } = await validateShoppingItem({ name });
 
   return getShoppingItemsCollection().add({
     name: cleanName,
     shoppingCategoryId,
     popularity: 0,
+  });
+}
+
+async function updateShoppingItem({ id, name, shoppingCategoryId }) {
+  const { shoppingItemRef, cleanName } = await validateShoppingItem({
+    id,
+    name,
+  });
+
+  return shoppingItemRef.update({
+    name: cleanName,
+    shoppingCategoryId,
   });
 }
 
@@ -120,22 +156,6 @@ function subscribeToGroupedShoppingItemsUpdates({ onUpdate, onError }) {
   }, onError);
 }
 
-async function updateShoppingItem({ id, name, shoppingCategoryId }) {
-  const shoppingItemRef = getShoppingItemsCollection().doc(id);
-  const shoppingItemSnapshot = await shoppingItemRef.get();
-
-  if (!shoppingItemSnapshot.exists) {
-    const { name } = shoppingItemSnapshot.data();
-
-    throw new Error(`Can't find "${name}" anymore.`);
-  }
-
-  return shoppingItemRef.update({
-    name: cleanShoppingItemName(name),
-    shoppingCategoryId,
-  });
-}
-
 async function deleteShoppingItem({ id }) {
   const shoppingItemRef = getShoppingItemsCollection().doc(id);
   const shoppingItemSnapshot = await shoppingItemRef.get();
@@ -158,11 +178,11 @@ async function deleteShoppingItem({ id }) {
 
 export {
   createShoppingItem,
+  updateShoppingItem,
   getShoppingItem,
   getShoppingItemInTransaction,
   getGroupedShoppingItems,
   getShoppingItemsInCategory,
   subscribeToGroupedShoppingItemsUpdates,
-  updateShoppingItem,
   deleteShoppingItem,
 };

@@ -1,5 +1,5 @@
 import { db } from '../firebase';
-import { isGroupValid, cleanGroupName } from './groupsUtils';
+import { cleanGroupName } from './groupsUtils';
 
 function getGroupsCollection() {
   return db.collection('groups');
@@ -11,21 +11,15 @@ async function validateGroup({ id, name }) {
   if (id != null) {
     groupRef = getGroupsCollection().doc(id);
 
-    const groupSnapshot = await groupRef.get();
+    const documentSnapshot = await groupRef.get();
 
-    if (!groupSnapshot.exists) {
+    if (!documentSnapshot.exists) {
       throw new Error("This group doesn't exist anymore.");
     }
   }
 
   if (name != null) {
     cleanName = cleanGroupName(name);
-
-    if (!isGroupValid({ name: cleanName })) {
-      throw new Error(
-        'Group name can contain a-z and _ only, must start with a letter, and be at least 2 characters long.'
-      );
-    }
 
     const querySnapshot = await getGroupsCollection()
       .where('name', '==', cleanName)
