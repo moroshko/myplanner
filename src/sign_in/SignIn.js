@@ -4,9 +4,9 @@ import TextInput from '../shared/TextInput';
 import Button from '../shared/Button';
 import { signIn } from '../authAPI';
 import { AppContext } from '../reducer';
-import './Login.css';
+import './SignIn.css';
 
-function Login() {
+function SignIn() {
   const { dispatchChange } = useContext(AppContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,7 +30,7 @@ function Login() {
             user,
           });
 
-          // Login will be unmounted at this point.
+          // SignIn will be unmounted at this point.
           // That's why we don't update the state.
         })
         .catch(error => {
@@ -48,14 +48,14 @@ function Login() {
   }, []);
 
   return (
-    <div className="LoginContainer">
-      <h1 className="LoginHeader">
+    <div className="SignInContainer">
+      <h1 className="SignInHeader">
         <Logo size={56} />
         My Planner
       </h1>
       <form onSubmit={onSubmit}>
         <TextInput icon="envelope" placeholder="email" onChange={setEmail} />
-        <div className="LoginPasswordContainer">
+        <div className="SignInPasswordContainer">
           <TextInput
             icon="lock"
             type="password"
@@ -63,12 +63,12 @@ function Login() {
             onChange={setPassword}
           />
         </div>
-        <div className="LoginButtonAndErrorMessageContainer">
+        <div className="SignInButtonAndErrorMessageContainer">
           <Button primary fullWidth type="submit" disabled={isButtonDisabled}>
-            {isLoggingIn ? 'Please wait...' : 'Login'}
+            {isLoggingIn ? 'Please wait...' : 'Sign In'}
           </Button>
           {errorMessage && (
-            <div className="LoginErrorMessage">
+            <div className="SignInErrorMessage">
               {errorMessage}
               <Button tertiary onClick={onHideErrorMessageClick}>
                 Hide
@@ -77,7 +77,7 @@ function Login() {
           )}
         </div>
       </form>
-      <div className="LoginExtraButtons">
+      <div className="SignInExtraButtons">
         <Button tertiary onClick={onForgotPasswordClick}>
           I forgot my password
         </Button>
@@ -86,4 +86,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignIn;

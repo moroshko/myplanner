@@ -90,7 +90,7 @@ function init(appName) {
   };
 }
 
-function login(auth) {
+function signIn(auth) {
   return auth.signInWithEmailAndPassword(
     'michael.moroshko@gmail.com',
     PASSWORD
@@ -173,8 +173,8 @@ async function copyAllData({ from, to }) {
   const { auth: fromAuth, db: fromDb } = init(from);
   const { auth: toAuth, db: toDb } = init(to);
 
-  await login(fromAuth);
-  await login(toAuth);
+  await signIn(fromAuth);
+  await signIn(toAuth);
 
   collections.forEach(async ({ collectionName, fields }) => {
     await writeCollection(

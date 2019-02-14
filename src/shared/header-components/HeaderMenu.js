@@ -22,7 +22,7 @@ function HeaderMenu() {
     activePage === SHOPPING_PAGE ||
     activePage === SHOPPING_ITEMS_PAGE ||
     activePage === SHOPPING_CATEGORIES_PAGE;
-  const onLogout = useCallback(() => {
+  const onSignOut = useCallback(() => {
     signOut().catch(error => {
       dispatchChange({
         type: 'SHOW_DIALOG',
@@ -68,7 +68,7 @@ function HeaderMenu() {
           </div>
           <hr className="HeaderMenuItemsSeparator" />
           <div className="HeaderMenuItemsContainer">
-            <HeaderMenuItem onClick={onLogout}>Logout</HeaderMenuItem>
+            <HeaderMenuItem onClick={onSignOut}>Sign Out</HeaderMenuItem>
           </div>
         </div>
       )}

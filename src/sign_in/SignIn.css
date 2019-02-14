@@ -1,25 +1,25 @@
-.LoginContainer {
+.SignInContainer {
   display: flex;
   flex-direction: column;
   width: 320px;
   max-width: 90%;
   align-self: center;
 }
-.LoginHeader {
+.SignInHeader {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: var(--font-header-bold);
   margin-bottom: 56px;
 }
-.LoginPasswordContainer {
+.SignInPasswordContainer {
   margin-top: 16px;
 }
-.LoginButtonAndErrorMessageContainer {
+.SignInButtonAndErrorMessageContainer {
   position: relative;
   margin-top: 16px;
 }
-.LoginErrorMessage {
+.SignInErrorMessage {
   position: absolute;
   left: 0;
   top: 72px;
@@ -28,6 +28,6 @@
   color: var(--red-70);
   background-color: #fff;
 }
-.LoginExtraButtons {
+.SignInExtraButtons {
   margin-top: 36px;
 }

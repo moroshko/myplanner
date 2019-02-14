@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useCallback, useContext } from 'react';
 import classNames from 'classnames';
 import { onAuthStateChanged } from './authAPI';
 import { AppContext } from './reducer';
-import Login from './login/Login';
+import SignIn from './sign_in/SignIn';
 import GroupsHeader from './groups/GroupsHeader';
 import GroupsMain from './groups/GroupsMain';
 import UsersHeader from './users/UsersHeader';
@@ -49,7 +49,7 @@ import {
   EDIT_SHOPPING_LIST_ITEM_DIALOG,
   DELETE_CHECKED_SHOPPING_LIST_ITEMS_CONFIRMATION_DIALOG,
   MAX_WIDTH,
-  LOGIN_PAGE,
+  SIGN_IN_PAGE,
   GROUPS_PAGE,
   USERS_PAGE,
   CALENDAR_PAGE,
@@ -71,7 +71,7 @@ function Main() {
     openDialogName,
     openDialogData,
   } = state;
-  const isFooterVisible = activePage !== LOGIN_PAGE;
+  const isFooterVisible = activePage !== SIGN_IN_PAGE;
   const onOverlayClick = useCallback(() => {
     dispatchChange({
       type: 'HIDE_OVERLAY',
@@ -95,7 +95,7 @@ function Main() {
       {loadingUser ? null : (
         <>
           <DebugInfo />
-          {activePage === LOGIN_PAGE && <Login />}
+          {activePage === SIGN_IN_PAGE && <SignIn />}
           {activePage === GROUPS_PAGE && (
             <>
               <GroupsHeader />
