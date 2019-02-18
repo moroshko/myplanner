@@ -1,23 +1,22 @@
 import React, { useState, useCallback, useContext } from 'react';
-import Logo from '../Logo';
+import { SignedOutHeader } from '../shared/header-components';
 import TextInput from '../shared/TextInput';
 import Button from '../shared/Button';
 import { signIn } from '../authAPI';
 import { AppContext } from '../reducer';
+import { NEW_ACCOUNT_PAGE, PASSWORD_RESET_PAGE } from '../constants';
 import './SignIn.css';
 
 function SignIn() {
   const { dispatchChange } = useContext(AppContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [isSigningIn, setIsSigningIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const isButtonDisabled =
-    email.trim() === '' || password.trim() === '' || isLoggingIn;
   const onSubmit = useCallback(
     e => {
       e.preventDefault();
-      setIsLoggingIn(true);
+      setIsSigningIn(true);
       setErrorMessage(null);
 
       signIn({
@@ -35,7 +34,7 @@ function SignIn() {
         })
         .catch(error => {
           setErrorMessage(error.message);
-          setIsLoggingIn(false);
+          setIsSigningIn(false);
         });
     },
     [email, password]
@@ -43,46 +42,71 @@ function SignIn() {
   const onHideErrorMessageClick = useCallback(() => {
     setErrorMessage(null);
   }, []);
-  const onForgotPasswordClick = useCallback(() => {
-    // TODO
+  const onCreateNewAccount = useCallback(() => {
+    dispatchChange({
+      type: 'UPDATE_ACTIVE_PAGE',
+      activePage: NEW_ACCOUNT_PAGE,
+    });
+  }, []);
+  const onResetPassword = useCallback(() => {
+    dispatchChange({
+      type: 'UPDATE_ACTIVE_PAGE',
+      activePage: PASSWORD_RESET_PAGE,
+    });
   }, []);
 
   return (
-    <div className="SignInContainer">
-      <h1 className="SignInHeader">
-        <Logo size={56} />
-        My Planner
-      </h1>
-      <form onSubmit={onSubmit}>
-        <TextInput icon="envelope" placeholder="email" onChange={setEmail} />
-        <div className="SignInPasswordContainer">
+    <>
+      <SignedOutHeader />
+      <div className="SignInContainer">
+        <h1 className="SignInHeader">Sign In</h1>
+        <form onSubmit={onSubmit}>
           <TextInput
-            icon="lock"
-            type="password"
-            placeholder="password"
-            onChange={setPassword}
+            icon="envelope"
+            placeholder="email"
+            autoCapitalize="none"
+            onChange={setEmail}
           />
-        </div>
-        <div className="SignInButtonAndErrorMessageContainer">
-          <Button primary fullWidth type="submit" disabled={isButtonDisabled}>
-            {isLoggingIn ? 'Please wait...' : 'Sign In'}
+          <div className="SignInPasswordContainer">
+            <TextInput
+              icon="lock"
+              type="password"
+              placeholder="password"
+              autoCapitalize="none"
+              onChange={setPassword}
+            />
+          </div>
+          <div className="SignInButtonAndErrorMessageContainer">
+            <Button
+              primary
+              fullWidth
+              type="submit"
+              disabled={
+                email.trim() === '' || password.trim() === '' || isSigningIn
+              }
+            >
+              {isSigningIn ? 'Please wait...' : 'Sign In'}
+            </Button>
+            {errorMessage && (
+              <div className="SignInErrorMessage">
+                {errorMessage}
+                <Button tertiary onClick={onHideErrorMessageClick}>
+                  Hide
+                </Button>
+              </div>
+            )}
+          </div>
+        </form>
+        <div className="SignInExtraButtons">
+          <Button tertiary onClick={onCreateNewAccount}>
+            Create New Account
           </Button>
-          {errorMessage && (
-            <div className="SignInErrorMessage">
-              {errorMessage}
-              <Button tertiary onClick={onHideErrorMessageClick}>
-                Hide
-              </Button>
-            </div>
-          )}
+          <Button tertiary onClick={onResetPassword}>
+            Reset Password
+          </Button>
         </div>
-      </form>
-      <div className="SignInExtraButtons">
-        <Button tertiary onClick={onForgotPasswordClick}>
-          I forgot my password
-        </Button>
       </div>
-    </div>
+    </>
   );
 }
 

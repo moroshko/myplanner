@@ -1,4 +1,5 @@
 import React from 'react';
+import queryString from 'query-string';
 import groupBy from 'lodash.groupby';
 import isEqual from 'lodash.isequal';
 import { parse, differenceInDays, addDays, subDays } from 'date-fns';
@@ -16,9 +17,12 @@ import {
   ERROR_DIALOG,
   CALENDAR_PAGE,
   TEMP_USER_SETTINGS_CALENDAR_DAYS_BACK,
+  EMAIL_VERIFICATION_PAGE,
+  NEW_PASSWORD_PAGE,
   TODOS_PAGE,
   SHOPPING_PAGE,
   SIGN_IN_PAGE,
+  NEW_ACCOUNT_PAGE,
 } from './constants';
 
 function getInitialCalendarState() {
@@ -54,10 +58,17 @@ function getInitialShoppingState() {
 }
 
 function getInitialState() {
+  const { mode } = queryString.parse(window.location.search);
+
   return {
     loadingUser: true,
     user: null,
-    activePage: null,
+    activePage:
+      mode === 'verifyEmail'
+        ? EMAIL_VERIFICATION_PAGE
+        : mode === 'resetPassword'
+        ? NEW_PASSWORD_PAGE
+        : null,
     backButtonPage: null,
     isHeaderMenuOpen: false,
     isAutoSuggestOpen: false,
@@ -73,15 +84,28 @@ function reducer(state, action) {
   switch (action.type) {
     case 'UPDATE_USER': {
       const { user } = action;
+      let { activePage } = state;
+
+      if (![EMAIL_VERIFICATION_PAGE, NEW_PASSWORD_PAGE].includes(activePage)) {
+        activePage = SIGN_IN_PAGE;
+
+        if (user !== null) {
+          if (user.emailVerified) {
+            activePage = getActivePageFromLocalStorage(CALENDAR_PAGE);
+          } else {
+            if (state.activePage === NEW_ACCOUNT_PAGE) {
+              // user just signed up, wait on NEW_ACCOUNT_PAGE so that the verification email is sent
+              activePage = NEW_ACCOUNT_PAGE;
+            }
+          }
+        }
+      }
 
       return {
-        ...getInitialState(user),
+        ...getInitialState(),
         loadingUser: false,
         user,
-        activePage:
-          user === null
-            ? SIGN_IN_PAGE
-            : getActivePageFromLocalStorage(CALENDAR_PAGE),
+        activePage,
       };
     }
 

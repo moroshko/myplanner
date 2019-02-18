@@ -1,7 +1,7 @@
 export const STATUS_LOADING = 1;
 export const STATUS_LOADED = 2;
 export const CALENDAR_INITIAL_DAYS = 14;
-export const TEMP_USER_SETTINGS_CALENDAR_DAYS_BACK = 14;
+export const TEMP_USER_SETTINGS_CALENDAR_DAYS_BACK = 0;
 export const LOAD_MORE_COUNT = 30;
 
 export const MAX_WIDTH = 450;
@@ -33,6 +33,10 @@ export const DELETE_CHECKED_SHOPPING_LIST_ITEMS_CONFIRMATION_DIALOG = 15;
 
 // It's useful to have page values descriptive because we store them in local storage.
 export const SIGN_IN_PAGE = 'Sign In';
+export const NEW_ACCOUNT_PAGE = 'Sign Up';
+export const EMAIL_VERIFICATION_PAGE = 'Email Verification';
+export const PASSWORD_RESET_PAGE = 'Password Reset';
+export const NEW_PASSWORD_PAGE = 'New Password';
 export const GROUPS_PAGE = 'Groups';
 export const USERS_PAGE = 'Users';
 export const CALENDAR_PAGE = 'Calendar';

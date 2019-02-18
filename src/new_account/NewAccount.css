@@ -1,4 +1,4 @@
-.SignInContainer {
+.NewAccountContainer {
   position: absolute;
   top: 25%;
   display: flex;
@@ -7,19 +7,19 @@
   max-width: 90%;
   align-self: center;
 }
-.SignInHeader {
+.NewAccountHeader {
   font-family: var(--font-header-bold);
   font-size: var(--font-size-7);
   margin: 0 0 16px 0;
 }
-.SignInPasswordContainer {
+.NewAccountPasswordContainer {
   margin-top: 16px;
 }
-.SignInButtonAndErrorMessageContainer {
+.NewAccountButtonAndErrorMessageContainer {
   position: relative;
   margin-top: 16px;
 }
-.SignInErrorMessage {
+.NewAccountErrorMessage {
   position: absolute;
   left: 0;
   top: 72px;
@@ -27,8 +27,9 @@
   min-height: 72px;
   color: var(--red-70);
   background-color: #fff;
-  z-index: 1;
 }
-.SignInExtraButtons {
-  margin-top: 36px;
+.NewAccountSuccessMessage {
+  margin-top: 16px;
+  font-size: var(--font-size-2);
+  color: var(--green-70);
 }

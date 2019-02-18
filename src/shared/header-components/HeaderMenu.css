@@ -24,3 +24,7 @@
 .HeaderMenuItemsSeparator {
   background-color: var(--grey-30);
 }
+.HeaderMenuSignedInAs {
+  padding: 8px 16px 0;
+  font-size: var(--font-size-1);
+}

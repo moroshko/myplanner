@@ -34,7 +34,7 @@
   border: 1px solid var(--grey-30);
   border-radius: 4px;
 }
-.TextInput:hover {
+.TextInput:not(:disabled):not(:focus):hover {
   border-color: var(--grey-50);
 }
 .TextInput:focus {

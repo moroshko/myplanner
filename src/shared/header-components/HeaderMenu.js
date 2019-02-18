@@ -67,6 +67,7 @@ function HeaderMenu() {
             <HeaderMenuItem to={SETTINGS_PAGE}>Settings</HeaderMenuItem>
           </div>
           <hr className="HeaderMenuItemsSeparator" />
+          <div className="HeaderMenuSignedInAs">Signed in as {user.email}</div>
           <div className="HeaderMenuItemsContainer">
             <HeaderMenuItem onClick={onSignOut}>Sign Out</HeaderMenuItem>
           </div>

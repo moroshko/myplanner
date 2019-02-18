@@ -6,6 +6,7 @@
   justify-content: center;
   height: 100vh;
   line-height: 1.5;
+  overflow-y: auto;
   color: var(--grey-100);
   background-color: #fff;
   box-shadow: var(--box-shadow-5);

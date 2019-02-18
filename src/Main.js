@@ -3,6 +3,10 @@ import classNames from 'classnames';
 import { onAuthStateChanged } from './authAPI';
 import { AppContext } from './reducer';
 import SignIn from './sign_in/SignIn';
+import NewAccount from './new_account/NewAccount';
+import EmailVerification from './email_verification/EmailVerification';
+import PasswordReset from './password_reset/PasswordReset';
+import NewPassword from './new_password/NewPassword';
 import GroupsHeader from './groups/GroupsHeader';
 import GroupsMain from './groups/GroupsMain';
 import UsersHeader from './users/UsersHeader';
@@ -50,6 +54,10 @@ import {
   DELETE_CHECKED_SHOPPING_LIST_ITEMS_CONFIRMATION_DIALOG,
   MAX_WIDTH,
   SIGN_IN_PAGE,
+  NEW_ACCOUNT_PAGE,
+  EMAIL_VERIFICATION_PAGE,
+  PASSWORD_RESET_PAGE,
+  NEW_PASSWORD_PAGE,
   GROUPS_PAGE,
   USERS_PAGE,
   CALENDAR_PAGE,
@@ -71,7 +79,13 @@ function Main() {
     openDialogName,
     openDialogData,
   } = state;
-  const isFooterVisible = activePage !== SIGN_IN_PAGE;
+  const isLoggedInPage = ![
+    SIGN_IN_PAGE,
+    NEW_ACCOUNT_PAGE,
+    EMAIL_VERIFICATION_PAGE,
+    PASSWORD_RESET_PAGE,
+    NEW_PASSWORD_PAGE,
+  ].includes(activePage);
   const onOverlayClick = useCallback(() => {
     dispatchChange({
       type: 'HIDE_OVERLAY',
@@ -94,8 +108,12 @@ function Main() {
     <div className="MainContainer" style={{ maxWidth: MAX_WIDTH }}>
       {loadingUser ? null : (
         <>
-          <DebugInfo />
+          {isLoggedInPage && <DebugInfo />}
           {activePage === SIGN_IN_PAGE && <SignIn />}
+          {activePage === NEW_ACCOUNT_PAGE && <NewAccount />}
+          {activePage === EMAIL_VERIFICATION_PAGE && <EmailVerification />}
+          {activePage === PASSWORD_RESET_PAGE && <PasswordReset />}
+          {activePage === NEW_PASSWORD_PAGE && <NewPassword />}
           {activePage === GROUPS_PAGE && (
             <>
               <GroupsHeader />
@@ -148,7 +166,7 @@ function Main() {
               <SettingsMain />
             </>
           )}
-          {isFooterVisible && <Footer />}
+          {isLoggedInPage && <Footer />}
           {(isHeaderMenuOpen ||
             isAutoSuggestOpen ||
             openDialogName !== null) && (

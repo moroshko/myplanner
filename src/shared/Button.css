@@ -29,6 +29,9 @@
   align-self: flex-start;
   color: var(--grey-70);
 }
+.ButtonTertiary.ButtonDisabled {
+  background-color: transparent;
+}
 .ButtonDanger {
   color: var(--red-60);
 }
