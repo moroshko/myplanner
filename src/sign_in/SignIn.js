@@ -2,7 +2,7 @@ import React, { useState, useCallback, useContext } from 'react';
 import { SignedOutHeader } from '../shared/header-components';
 import TextInput from '../shared/TextInput';
 import Button from '../shared/Button';
-import { signIn } from '../authAPI';
+import { signIn, sendVerificationEmailTo } from '../authAPI';
 import { AppContext } from '../reducer';
 import { NEW_ACCOUNT_PAGE, PASSWORD_RESET_PAGE } from '../constants';
 import './SignIn.css';
@@ -12,11 +12,13 @@ function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSigningIn, setIsSigningIn] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const onSubmit = useCallback(
     e => {
       e.preventDefault();
       setIsSigningIn(true);
+      setIsEmailVerified(null);
       setErrorMessage(null);
 
       signIn({
@@ -29,17 +31,30 @@ function SignIn() {
             user,
           });
 
-          // SignIn will be unmounted at this point.
-          // That's why we don't update the state.
+          if (!user.emailVerified) {
+            sendVerificationEmailTo(user)
+              .then(() => {
+                setIsSigningIn(false);
+                setIsEmailVerified(false);
+              })
+              .catch(error => {
+                setIsSigningIn(false);
+                setErrorMessage(error.message);
+              });
+          } else {
+            // SignIn will be unmounted at this point.
+            // That's why we don't update the state.
+          }
         })
         .catch(error => {
-          setErrorMessage(error.message);
           setIsSigningIn(false);
+          setErrorMessage(error.message);
         });
     },
     [email, password]
   );
-  const onHideErrorMessageClick = useCallback(() => {
+  const onHideMessageClick = useCallback(() => {
+    setIsEmailVerified(null);
     setErrorMessage(null);
   }, []);
   const onCreateNewAccount = useCallback(() => {
@@ -87,10 +102,20 @@ function SignIn() {
             >
               {isSigningIn ? 'Please wait...' : 'Sign In'}
             </Button>
-            {errorMessage && (
-              <div className="SignInErrorMessage">
-                {errorMessage}
-                <Button tertiary onClick={onHideErrorMessageClick}>
+            {(isEmailVerified === false || errorMessage) && (
+              <div className="SignInMessage">
+                {isEmailVerified === false && (
+                  <div className="SignInEmailVerificationMessage">
+                    We sent a verification email to{' '}
+                    <strong>{email.trim()}</strong>
+                    <br />
+                    Please click the link in it to verify your email.
+                  </div>
+                )}
+                {errorMessage && (
+                  <div className="SignInErrorMessage">{errorMessage}</div>
+                )}
+                <Button tertiary onClick={onHideMessageClick}>
                   Hide
                 </Button>
               </div>

@@ -19,15 +19,21 @@
   position: relative;
   margin-top: 16px;
 }
-.SignInErrorMessage {
+.SignInMessage {
   position: absolute;
   left: 0;
   top: 72px;
   width: 100%;
   min-height: 72px;
-  color: var(--red-70);
   background-color: #fff;
   z-index: 1;
+}
+.SignInErrorMessage {
+  color: var(--red-70);
+}
+.SignInEmailVerificationMessage {
+  font-size: var(--font-size-2);
+  color: var(--green-70);
 }
 .SignInExtraButtons {
   margin-top: 36px;
