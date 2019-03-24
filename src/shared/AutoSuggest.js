@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import Autosuggest from 'react-autosuggest';
+import { isMobile } from './sharedUtils';
 import TextInput from './TextInput';
 import './AutoSuggest.css';
 
@@ -101,6 +102,7 @@ function AutoSuggest({
       inputProps={inputProps}
       onSuggestionSelected={onAutosuggestSuggestionSelected}
       renderInputComponent={renderInputComponent}
+      focusInputOnSuggestionClick={!isMobile}
       theme={theme}
     />
   );
