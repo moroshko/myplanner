@@ -64,7 +64,7 @@ function ShoppingListItem({ shoppingListItem }) {
   }, [id, isChecked]);
 
   return (
-    <ListItem checked={isShopping && isChecked}>
+    <ListItem checked={isChecked}>
       <ListItemButton
         secondaryText={note}
         disabled={isShopping}
