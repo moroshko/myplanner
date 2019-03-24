@@ -24,7 +24,8 @@ function AutoSuggest({
   getSuggestions,
   renderSuggestion,
   onSuggestionSelected,
-  onSuggestionsChange,
+  onFocus,
+  onBlur,
 }) {
   const [value, setValue] = useState('');
   const [suggestions, setSuggestions] = useState(getSuggestions(value));
@@ -38,13 +39,11 @@ function AutoSuggest({
       const suggestions = getSuggestions(value);
 
       setSuggestions(suggestions);
-      onSuggestionsChange(suggestions);
     },
     [getSuggestions]
   );
   const onSuggestionsClearRequested = useCallback(() => {
     setSuggestions([]);
-    onSuggestionsChange([]);
   }, []);
   const getSuggestionValue = useCallback(suggestion => suggestion.name, []);
   const onChange = useCallback((_, { newValue }) => {
@@ -57,11 +56,13 @@ function AutoSuggest({
     },
     [onSuggestionSelected]
   );
-  const onFocus = useCallback(() => {
+  const _onFocus = useCallback(() => {
     setIsFocused(true);
+    onFocus();
   }, []);
-  const onBlur = useCallback(() => {
+  const _onBlur = useCallback(() => {
     setIsFocused(false);
+    onBlur();
   }, []);
   const inputProps = useMemo(
     () => ({
@@ -69,10 +70,10 @@ function AutoSuggest({
       disabled,
       value,
       onChange,
-      onFocus,
-      onBlur,
+      onFocus: _onFocus,
+      onBlur: _onBlur,
     }),
-    [placeholder, disabled, value, onChange, onFocus, onBlur]
+    [placeholder, disabled, value, onChange, _onFocus, _onBlur]
   );
   const renderInputComponent = ({ ref, ...inputProps }) => {
     const { onChange, ...restInputProps } = inputProps;

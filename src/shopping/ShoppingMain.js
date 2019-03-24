@@ -92,16 +92,15 @@ function ShoppingMain() {
     },
     [groupedShoppingListItems]
   );
-  const onSuggestionsChange = useCallback(suggestions => {
-    if (suggestions.length === 0) {
-      dispatchChange({
-        type: 'HIDE_OVERLAY',
-      });
-    } else {
-      dispatchChange({
-        type: 'OPEN_AUTOSUGGEST',
-      });
-    }
+  const onAutoSuggestFocus = useCallback(() => {
+    dispatchChange({
+      type: 'FOCUS_AUTOSUGGEST',
+    });
+  }, []);
+  const onAutoSuggestBlur = useCallback(() => {
+    dispatchChange({
+      type: 'BLUR_AUTOSUGGEST',
+    });
   }, []);
   const onUpdate = useCallback(({ groupedShoppingItems }) => {
     dispatchChange({
@@ -168,7 +167,8 @@ function ShoppingMain() {
                 getSuggestions={getSuggestions}
                 renderSuggestion={renderSuggestion}
                 onSuggestionSelected={onSuggestionSelected}
-                onSuggestionsChange={onSuggestionsChange}
+                onFocus={onAutoSuggestFocus}
+                onBlur={onAutoSuggestBlur}
               />
             </div>
           </animated.div>

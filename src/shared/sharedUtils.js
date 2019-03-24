@@ -36,6 +36,8 @@ function isDebugInfoVisible(user) {
   return user && user.email === 'michael.moroshko@gmail.com';
 }
 
+const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
+
 export {
   getNow,
   getToday,
@@ -45,4 +47,5 @@ export {
   uppercaseFirstLetter,
   uppercaseFirstLetterOfEveryWord,
   isDebugInfoVisible,
+  isMobile,
 };

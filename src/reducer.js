@@ -177,10 +177,17 @@ function reducer(state, action) {
       };
     }
 
-    case 'OPEN_AUTOSUGGEST': {
+    case 'FOCUS_AUTOSUGGEST': {
       return {
         ...state,
         isAutoSuggestOpen: true,
+      };
+    }
+
+    case 'BLUR_AUTOSUGGEST': {
+      return {
+        ...state,
+        isAutoSuggestOpen: false,
       };
     }
 
@@ -188,7 +195,6 @@ function reducer(state, action) {
       return {
         ...state,
         isHeaderMenuOpen: false,
-        isAutoSuggestOpen: false,
         openDialogName: null,
         openDialogData: null,
       };

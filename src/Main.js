@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useCallback, useContext } from 'react';
 import classNames from 'classnames';
 import { onAuthStateChanged } from './authAPI';
+import { isMobile } from './shared/sharedUtils';
 import { AppContext } from './reducer';
 import SignIn from './sign_in/SignIn';
 import NewAccount from './new_account/NewAccount';
@@ -86,6 +87,7 @@ function Main() {
     PASSWORD_RESET_PAGE,
     NEW_PASSWORD_PAGE,
   ].includes(activePage);
+  const isFooterVisible = isLoggedInPage && !(isMobile && isAutoSuggestOpen);
   const onOverlayClick = useCallback(() => {
     dispatchChange({
       type: 'HIDE_OVERLAY',
@@ -166,13 +168,11 @@ function Main() {
               <SettingsMain />
             </>
           )}
-          {isLoggedInPage && <Footer />}
-          {(isHeaderMenuOpen ||
-            isAutoSuggestOpen ||
-            openDialogName !== null) && (
+          {isFooterVisible && <Footer />}
+          {(isHeaderMenuOpen || openDialogName !== null) && (
             <div
               className={classNames('MainOverlay', {
-                MainOverlayTransparent: isHeaderMenuOpen || isAutoSuggestOpen,
+                MainOverlayTransparent: isHeaderMenuOpen,
               })}
               onClick={onOverlayClick}
             >
