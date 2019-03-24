@@ -12,7 +12,12 @@ import {
   SHOPPING_CATEGORY_CHECKED_ITEMS_ID,
 } from '../constants';
 
-function ShoppingListItemsGroup({ shoppingCategory, shoppingListItems }) {
+function ShoppingListItemsGroup({
+  shoppingCategory,
+  shoppingListItems,
+  highlightedItemsMap,
+  onCheckboxClick,
+}) {
   const { state, dispatchChange } = useContext(AppContext);
   const { isShopping } = state;
   const isCheckedItemsCategory =
@@ -39,6 +44,8 @@ function ShoppingListItemsGroup({ shoppingCategory, shoppingListItems }) {
         {shoppingListItems.map(shoppingListItem => (
           <ShoppingListItem
             shoppingListItem={shoppingListItem}
+            isHighlighted={highlightedItemsMap[shoppingListItem.id] === true}
+            onCheckboxClick={onCheckboxClick}
             key={shoppingListItem.id}
           />
         ))}

@@ -1,4 +1,11 @@
-import React, { useEffect, useMemo, useCallback, useContext } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  useContext,
+  useRef,
+} from 'react';
 import sortBy from 'lodash.sortby';
 import ShoppingListItemsGroup from './ShoppingListItemsGroup';
 import EmptyMessage from '../shared/EmptyMessage';
@@ -12,6 +19,16 @@ import { setIsShoppingToLocalStorage } from '../localStorage';
 import { ERROR_DIALOG, SHOPPING_CATEGORY_CHECKED_ITEMS_ID } from '../constants';
 
 function ShoppingList() {
+  const [highlightedItemsMap, setHighlightedItemsMap] = useState({});
+
+  // Keep track of the latest `highlightedItemsMap`
+  // We need it because in `setTimeout` below we need access to the latest `highlightedItemsMap`.
+  const latestHighlightedItemsMap = useRef(null);
+
+  useEffect(() => {
+    latestHighlightedItemsMap.current = highlightedItemsMap;
+  });
+
   const { state, dispatchChange } = useContext(AppContext);
   const { groupedShoppingListItems, isShopping } = state;
   const shoppingListItemsToDisplay = useMemo(() => {
@@ -66,6 +83,22 @@ function ShoppingList() {
 
     return result;
   }, [groupedShoppingListItems, isShopping]);
+  const onCheckboxClick = useCallback(
+    shoppingListItemId => {
+      setHighlightedItemsMap({
+        ...highlightedItemsMap,
+        [shoppingListItemId]: true,
+      });
+
+      setTimeout(() => {
+        setHighlightedItemsMap({
+          ...latestHighlightedItemsMap.current,
+          [shoppingListItemId]: false,
+        });
+      }, 3000);
+    },
+    [highlightedItemsMap]
+  );
   const onUpdate = useCallback(
     ({ groupedShoppingListItems }) => {
       dispatchChange({
@@ -136,6 +169,8 @@ function ShoppingList() {
           <ShoppingListItemsGroup
             shoppingCategory={shoppingCategory}
             shoppingListItems={shoppingListItems}
+            highlightedItemsMap={isShopping ? highlightedItemsMap : {}}
+            onCheckboxClick={onCheckboxClick}
             key={shoppingCategory.id}
           />
         )

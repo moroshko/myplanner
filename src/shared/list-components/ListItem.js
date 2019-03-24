@@ -5,6 +5,7 @@ import './ListItem.css';
 function ListItem({
   vertical,
   checked,
+  highlighted,
   isDragging,
   draggableProps,
   containerRef,
@@ -15,6 +16,7 @@ function ListItem({
       className={classNames('ListItem', {
         ListItemVertical: vertical,
         ListItemChecked: checked,
+        ListItemHighlighted: highlighted,
         ListItemDragging: isDragging,
       })}
       {...draggableProps}

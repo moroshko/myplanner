@@ -12,6 +12,9 @@
   color: var(--grey-50);
   text-decoration: line-through;
 }
+.ListItemHighlighted {
+  background-color: var(--yellow-20);
+}
 .ListItemDragging {
   background-color: var(--grey-10);
   box-shadow: var(--box-shadow-1);

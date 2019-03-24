@@ -43,6 +43,17 @@
   --red-20: hsl(360, 100%, 87%);
   --red-10: hsl(360, 100%, 95%);
 
+  --yellow-100: hsl(15, 86%, 30%);
+  --yellow-90: hsl(22, 82%, 39%);
+  --yellow-80: hsl(29, 80%, 44%);
+  --yellow-70: hsl(36, 77%, 49%);
+  --yellow-60: hsl(42, 87%, 55%);
+  --yellow-50: hsl(44, 92%, 63%);
+  --yellow-40: hsl(48, 94%, 68%);
+  --yellow-30: hsl(48, 95%, 76%);
+  --yellow-20: hsl(48, 100%, 88%);
+  --yellow-10: hsl(49, 100%, 96%);
+
   --font-size-1: 12px;
   --font-size-2: 14px;
   --font-size-3: 16px;

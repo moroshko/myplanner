@@ -10,7 +10,11 @@ import {
 import { EDIT_SHOPPING_LIST_ITEM_DIALOG, ERROR_DIALOG } from '../constants';
 import './ShoppingListItem.css';
 
-function ShoppingListItem({ shoppingListItem }) {
+function ShoppingListItem({
+  shoppingListItem,
+  isHighlighted,
+  onCheckboxClick,
+}) {
   const { id, name, note, checkTimestamp } = shoppingListItem;
   const isChecked = checkTimestamp != null;
   const [isLoading, setIsLoading] = useState(false);
@@ -25,8 +29,9 @@ function ShoppingListItem({ shoppingListItem }) {
       },
     });
   }, [shoppingListItem]);
-  const onCheckboxClick = useCallback(() => {
+  const _onCheckboxClick = useCallback(() => {
     setIsLoading(true);
+    onCheckboxClick(id);
 
     if (isChecked) {
       uncheckShoppingListItem({
@@ -61,10 +66,10 @@ function ShoppingListItem({ shoppingListItem }) {
           setIsLoading(false);
         });
     }
-  }, [id, isChecked]);
+  }, [id, isChecked, onCheckboxClick]);
 
   return (
-    <ListItem checked={isChecked}>
+    <ListItem checked={isChecked} highlighted={isHighlighted}>
       <ListItemButton
         secondaryText={note}
         disabled={isShopping}
@@ -89,7 +94,7 @@ function ShoppingListItem({ shoppingListItem }) {
             className="ShoppingListItemCheckbox"
             disabled={isLoading}
             style={props}
-            onClick={onCheckboxClick}
+            onClick={_onCheckboxClick}
           >
             <CheckboxIcon checked={isChecked} loading={isLoading} />
           </animated.button>
