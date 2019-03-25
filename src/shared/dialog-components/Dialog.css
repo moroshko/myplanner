@@ -3,7 +3,7 @@
   background-color: var(--grey-10);
   box-shadow: var(--box-shadow-5);
   opacity: 1;
-  transition: opacity 0.1s ease;
+  transition: opacity 0.25s ease;
 }
 .DialogHidden {
   opacity: 0;

@@ -20,7 +20,7 @@ function Dialog({ onSubmit, children }) {
     if (isMobile) {
       setTimeout(() => {
         setIsHidden(false);
-      }, 300); // Wait until mobile keyboard is visible
+      }, 400); // Wait until mobile keyboard is visible
     }
   }, []);
 
