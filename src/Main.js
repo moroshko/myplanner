@@ -87,7 +87,9 @@ function Main() {
     PASSWORD_RESET_PAGE,
     NEW_PASSWORD_PAGE,
   ].includes(activePage);
-  const isFooterVisible = isLoggedInPage && !(isMobile && isAutoSuggestOpen);
+  const isFooterVisible =
+    isLoggedInPage &&
+    !(isMobile && (openDialogName !== null || isAutoSuggestOpen));
   const onOverlayClick = useCallback(() => {
     dispatchChange({
       type: 'HIDE_OVERLAY',
