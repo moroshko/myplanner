@@ -1,7 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import classNames from 'classnames';
+import { isMobile } from '../sharedUtils';
 import './Dialog.css';
 
 function Dialog({ onSubmit, children }) {
+  const [isHidden, setIsHidden] = useState(isMobile);
   const onFormClick = useCallback(e => {
     e.stopPropagation();
   }, []);
@@ -13,8 +16,22 @@ function Dialog({ onSubmit, children }) {
     [onSubmit]
   );
 
+  useEffect(() => {
+    if (isMobile) {
+      setTimeout(() => {
+        setIsHidden(false);
+      }, 300); // Wait until mobile keyboard is visible
+    }
+  }, []);
+
   return (
-    <form className="Dialog" onClick={onFormClick} onSubmit={onFormSubmit}>
+    <form
+      className={classNames('Dialog', {
+        DialogHidden: isHidden,
+      })}
+      onClick={onFormClick}
+      onSubmit={onFormSubmit}
+    >
       {children}
     </form>
   );
