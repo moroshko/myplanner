@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext } from 'react';
-import { Spring, animated } from 'react-spring';
+import { Spring, animated } from 'react-spring/renderprops';
 import { CheckboxIcon } from '../icons';
 import { ListItem, ListItemButton } from '../shared/list-components';
 import { AppContext } from '../reducer';

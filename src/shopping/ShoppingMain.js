@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useCallback, useContext } from 'react';
-import { Spring, animated } from 'react-spring';
+import { Spring, animated } from 'react-spring/renderprops';
 import createTrie from 'autosuggest-trie';
 import classNames from 'classnames';
 import sortBy from 'lodash.sortby';
