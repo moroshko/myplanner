@@ -4,6 +4,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "lint": "eslint '**/*.js'",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "prettier --write '**/*.{js,json}'",

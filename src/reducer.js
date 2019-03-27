@@ -129,6 +129,11 @@ function reducer(state, action) {
 
     case 'UPDATE_ACTIVE_PAGE': {
       const { activePage, backButtonPage } = action;
+
+      if (activePage === state.activePage) {
+        return state;
+      }
+
       let pageSpecificUpdate;
 
       switch (activePage) {
