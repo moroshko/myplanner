@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useCallback, useContext } from 'react';
 import classNames from 'classnames';
 import { onAuthStateChanged } from './authAPI';
-import { isMobile } from './shared/sharedUtils';
+import { isMobile, isDebugInfoVisible } from './shared/sharedUtils';
 import { AppContext } from './reducer';
 import SignIn from './sign_in/SignIn';
 import NewAccount from './new_account/NewAccount';
@@ -74,6 +74,7 @@ function Main() {
   const { state, dispatchChange } = useContext(AppContext);
   const {
     loadingUser,
+    user,
     activePage,
     isHeaderMenuOpen,
     isAutoSuggestOpen,
@@ -87,7 +88,8 @@ function Main() {
     PASSWORD_RESET_PAGE,
     NEW_PASSWORD_PAGE,
   ].includes(activePage);
-  const isFooterVisible =
+  const showDebugInfo = isLoggedInPage && isDebugInfoVisible(user);
+  const showFooter =
     isLoggedInPage &&
     !(isMobile && (openDialogName !== null || isAutoSuggestOpen));
   const onOverlayClick = useCallback(() => {
@@ -112,7 +114,7 @@ function Main() {
     <div className="MainContainer" style={{ maxWidth: MAX_WIDTH }}>
       {loadingUser ? null : (
         <>
-          {isLoggedInPage && <DebugInfo />}
+          {showDebugInfo && <DebugInfo />}
           {activePage === SIGN_IN_PAGE && <SignIn />}
           {activePage === NEW_ACCOUNT_PAGE && <NewAccount />}
           {activePage === EMAIL_VERIFICATION_PAGE && <EmailVerification />}
@@ -170,7 +172,7 @@ function Main() {
               <SettingsMain />
             </>
           )}
-          {isFooterVisible && <Footer />}
+          {showFooter && <Footer />}
           {(isHeaderMenuOpen || openDialogName !== null) && (
             <div
               className={classNames('MainOverlay', {

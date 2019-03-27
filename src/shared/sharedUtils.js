@@ -33,7 +33,8 @@ function uppercaseFirstLetterOfEveryWord(str) {
 }
 
 function isDebugInfoVisible(user) {
-  return user && user.email === 'michael.moroshko@gmail.com';
+  return false;
+  //return user && user.email === 'michael.moroshko@gmail.com';
 }
 
 const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);

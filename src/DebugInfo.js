@@ -1,19 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Badge from './shared/Badge';
-import { isDebugInfoVisible } from './shared/sharedUtils';
 import useNetworkStatus from './hooks/useNetworkStatus';
-import { AppContext } from './reducer';
 import { DEBUG_INFO_HEIGHT } from './constants';
 import './DebugInfo.css';
 
 function DebugInfo() {
-  const { state } = useContext(AppContext);
-  const { user } = state;
   const isOnline = useNetworkStatus();
-
-  if (!isDebugInfoVisible(user)) {
-    return null;
-  }
 
   return (
     <div
