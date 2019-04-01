@@ -14,7 +14,7 @@ function TodosHeader() {
   }, []);
 
   return (
-    <Header title="Todos">
+    <Header title="Todos!">
       <button onClick={addTodo}>
         <AddIcon backgroundType="dark" />
       </button>

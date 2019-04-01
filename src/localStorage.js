@@ -1,6 +1,6 @@
 const STRING = 0;
 const BOOLEAN = 1;
-const PREFIX = 'my-planner::';
+const PREFIX = 'myplanner::';
 const ACTIVE_PAGE = 'activePage';
 const TODOS_OWNER_FILTER = 'todosOwnerFilter';
 const IS_SHOPPING = 'isShopping';
