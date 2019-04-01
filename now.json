@@ -16,6 +16,10 @@
       "dest": "/static/$1"
     },
     { "src": "/favicon.ico", "dest": "/favicon.ico" },
+    {
+      "src": "/android-chrome-512x512.png",
+      "dest": "/android-chrome-512x512.png"
+    },
     { "src": "/asset-manifest.json", "dest": "/asset-manifest.json" },
     { "src": "/manifest.json", "dest": "/manifest.json" },
     { "src": "/precache-manifest.(.*)", "dest": "/precache-manifest.$1" },
